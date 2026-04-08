@@ -1,0 +1,17 @@
+@import '@/styles/design-tokens.less';
+
+.card {
+  position: relative;
+  background: @glass-bg;
+  backdrop-filter: blur(@glass-blur);
+  -webkit-backdrop-filter: blur(@glass-blur);
+  border: 1px solid @color-outline-variant;
+  border-radius: @radius-lg;
+  padding: 2rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: @ambient-shadow;
+  transition: border-color @duration-default @ease-artistic, 
+              background @duration-default @ease-artistic;
+}

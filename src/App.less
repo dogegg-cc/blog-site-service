@@ -1,1 +1,34 @@
-/* Styles moved to index.css for global design system consistency */
+@import '@/styles/design-tokens.less';
+
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.background-overflow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  opacity: 0.3; // Make it subtle
+  pointer-events: none;
+}
+
+.page-content {
+  flex: 1;
+}
+
+.global-footer {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: @text-on-surface-variant;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}

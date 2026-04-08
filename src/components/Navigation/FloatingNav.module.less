@@ -1,0 +1,60 @@
+@import '@/styles/design-tokens.less';
+
+.navWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+  pointer-events: none;
+}
+
+.pillsContainer {
+  pointer-events: auto;
+  border-radius: @radius-full;
+  backdrop-filter: blur(@glass-blur);
+  -webkit-backdrop-filter: blur(@glass-blur);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: @ambient-shadow;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.pillsList {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.navItem {
+  position: relative;
+  font-family: @font-headline;
+  font-size: 1.125rem;
+  color: @text-on-surface-variant;
+  padding: 0.875rem 0;
+  transition: color @duration-default @ease-artistic;
+  
+  &:hover {
+    color: #fff;
+  }
+  
+  &.active {
+    color: @color-primary;
+  }
+}
+
+.underline {
+  position: absolute;
+  bottom: 0.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background-color: @color-primary;
+  border-radius: 50%;
+  box-shadow: 0 0 10px @color-primary;
+}

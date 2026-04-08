@@ -1,0 +1,147 @@
+@import '@/styles/design-tokens.less';
+
+.detailContainer {
+  width: 100%;
+}
+
+.tocSidebar {
+  width: 300px;
+  flex-shrink: 0;
+  
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+
+.tocSticky {
+  position: sticky;
+  top: 160px;
+}
+
+.tocHeader {
+  font-family: @font-body;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 2rem;
+  color: @text-on-surface-variant;
+}
+
+.tocNav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tocItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: @text-on-surface-variant;
+  transition: all @duration-fast;
+  
+  &:hover {
+    color: @color-primary;
+    transform: translateX(4px);
+  }
+}
+
+.tocDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid @color-outline;
+  transition: all @duration-fast;
+}
+
+.tocItem:hover .tocDot {
+  background-color: @color-primary;
+  border-color: @color-primary;
+  box-shadow: 0 0 10px @color-primary;
+}
+
+.contentArea {
+  flex: 1;
+  max-width: 800px;
+}
+
+.postMeta {
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  
+  span:first-child {
+    color: @color-primary;
+    font-weight: 800;
+  }
+  
+  span:last-child {
+    color: @text-on-surface-variant;
+  }
+}
+
+.postTitle {
+  font-size: clamp(3rem, 6vw, 5rem);
+  margin-bottom: 2rem;
+}
+
+.postExcerpt {
+  font-size: 1.5rem;
+  color: @text-on-surface-variant;
+  line-height: 1.6;
+  margin-bottom: 5rem;
+  font-weight: 300;
+}
+
+.postBody {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #fff;
+  opacity: 0.9;
+  
+  h2 {
+    font-size: 2.5rem;
+    margin: 4rem 0 2rem;
+    scroll-margin-top: 140px;
+  }
+  
+  p {
+    margin-bottom: 2rem;
+  }
+}
+
+.quoteCard {
+  margin: 4rem 0;
+  padding: 3rem !important;
+  font-family: @font-headline;
+  font-size: 1.75rem;
+  font-style: italic;
+  text-align: center;
+  border-left: 4px solid @color-primary !important;
+  background-color: @bg-surface-container-low !important;
+}
+
+.postImage {
+  margin: 5rem 0;
+  
+  img {
+    width: 100%;
+    border-radius: @radius-lg;
+    box-shadow: @ambient-shadow;
+  }
+}
+
+.caption {
+  display: block;
+  text-align: center;
+  font-size: 0.875rem;
+  color: @text-on-surface-variant;
+  margin-top: 1.5rem;
+  font-style: italic;
+}

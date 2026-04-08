@@ -1,0 +1,58 @@
+@import '@/styles/design-tokens.less';
+
+.container {
+  width: 100%;
+}
+
+.pageTitle {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.pageSubtitle {
+  color: @text-on-surface-variant;
+  font-size: 1.25rem;
+  margin-bottom: 6rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.card {
+  padding: 2rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem;
+  cursor: pointer;
+  
+  &:hover .title {
+    color: @color-primary;
+  }
+}
+
+.meta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  
+  span:first-child {
+    color: @color-primary;
+    font-weight: 800;
+  }
+}
+
+.dot {
+  opacity: 0.3;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-family: @font-headline;
+  transition: color @duration-default;
+}
