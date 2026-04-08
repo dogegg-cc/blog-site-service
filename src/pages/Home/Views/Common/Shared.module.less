@@ -14,9 +14,9 @@
   margin-bottom: 3rem;
 }
 
-// .ellipsis-multiline(@lines: 2)
+// .text-lines(@lines: 2)
 // @lines: 需要显示的行数，默认为 2 行
-.ellipsis-multiline(@lines: 2) {
+.text-lines(@lines: 2) {
   display: -webkit-box;         // 必须结合的属性，将对象作为弹性伸缩盒子模型显示
   -webkit-box-orient: vertical; // 必须结合的属性，设置伸缩盒对象的子元素的排列方式
   -webkit-line-clamp: @lines;   // 限制在一个块元素显示的文本的行数
@@ -25,7 +25,7 @@
   word-break: break-all;        // 可选：防止长单词或英文不换行导致布局错乱
 }
 
-.ellipsis-single() {
+.one-text-line() {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

@@ -3,7 +3,7 @@ import styles from './Home.module.less';
 import Hero from './Views/Hero';
 import ListItem from './Views/ListItem';
 import GridItem from './Views/GridItem';
-import ImmersiveSeries from './Views/ImmersiveSeries';
+import CarouselItem from './Views/Carousel';
 import VisualJournal from './Views/VisualJournal';
 import { getHomeData, type HomeData, type PageModule } from '@/api/home';
 
@@ -47,7 +47,7 @@ const Home: React.FC = () => {
       case 'grid':
         return <GridItem module={item} />;
       case 'carousel':
-        return <ImmersiveSeries />;
+        return <CarouselItem module={item} />;
       default:
         return null;
     }
