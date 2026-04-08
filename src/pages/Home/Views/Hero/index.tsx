@@ -1,6 +1,6 @@
 import React from 'react';
 import SectionReveal from '@/components/Motion/SectionReveal';
-import styles from '../Home.module.less';
+import styles from './Hero.module.less';
 
 const Hero: React.FC = () => {
   return (

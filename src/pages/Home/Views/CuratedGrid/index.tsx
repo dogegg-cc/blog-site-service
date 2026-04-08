@@ -1,20 +1,21 @@
 import React from 'react';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import ArtisticCard from '@/components/Common/ArtisticCard';
-import { GRID_ITEMS } from './Data';
-import styles from '../Home.module.less';
+import { GRID_ITEMS } from '../Data';
+import styles from './CuratedGrid.module.less';
+import sharedStyles from '../Common/Shared.module.less';
 
 const CuratedGrid: React.FC = () => {
   return (
     <section className={styles.curatedGrid}>
       <div className="max-w-7xl mx-auto px-6">
         <SectionReveal className={styles.gridHeader}>
-            <h2 className={styles.sectionTitle}>The Curated Grid</h2>
-            <p className={styles.sectionSubtitle}>A structural perspective on creative exploration.</p>
+            <h2 className={sharedStyles.sectionTitle}>The Curated Grid</h2>
+            <p className={sharedStyles.sectionSubtitle}>A structural perspective on creative exploration.</p>
         </SectionReveal>
 
         <div className={styles.gridContent}>
-            {GRID_ITEMS.map((item, i) => (
+            {GRID_ITEMS.map((item: any, i: number) => (
                 <SectionReveal key={i} delay={i * 0.15}>
                     <ArtisticCard className={styles.gridCard}>
                         <div className={styles.gridImage}>

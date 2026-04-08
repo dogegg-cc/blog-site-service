@@ -1,19 +1,20 @@
 import React from 'react';
 import SectionReveal from '@/components/Motion/SectionReveal';
-import { PHOTOS } from './Data';
-import styles from '../Home.module.less';
+import { PHOTOS } from '../Data';
+import styles from './VisualJournal.module.less';
+import sharedStyles from '../Common/Shared.module.less';
 
 const VisualJournal: React.FC = () => {
   return (
     <section className={styles.visualJournal}>
         <div className={styles.journalHeader}>
-            <h2 className={styles.sectionTitle}>Visual Journal</h2>
-            <p className={styles.sectionSubtitle}>Snapshots of life outside the screen.</p>
+            <h2 className={sharedStyles.sectionTitle}>Visual Journal</h2>
+            <p className={sharedStyles.sectionSubtitle}>Snapshots of life outside the screen.</p>
         </div>
         
         <div className={styles.photoWallContainer}>
             <SectionReveal delay={0.1} className={styles.albumTitle}>MY ALBUM</SectionReveal>
-            {PHOTOS.map((photo, i) => (
+            {PHOTOS.map((photo: any, i: number) => (
                 <SectionReveal 
                   key={i} 
                   className={styles.photoPrint}

@@ -1,8 +1,9 @@
 import React from 'react';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import ArtisticCard from '@/components/Common/ArtisticCard';
-import { IMMERSIVE_SERIES } from './Data';
-import styles from '../Home.module.less';
+import { IMMERSIVE_SERIES } from '../Data';
+import styles from './ImmersiveSeries.module.less';
+import sharedStyles from '../Common/Shared.module.less';
 
 const ImmersiveSeries: React.FC = () => {
   return (
@@ -10,8 +11,8 @@ const ImmersiveSeries: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className={styles.immersiveHeader}>
             <div>
-              <h2 className={styles.sectionTitle}>Immersive Series</h2>
-              <p className={styles.sectionSubtitle}>Swipe through the extended collection.</p>
+              <h2 className={sharedStyles.sectionTitle}>Immersive Series</h2>
+              <p className={sharedStyles.sectionSubtitle}>Swipe through the extended collection.</p>
             </div>
             <div className={styles.sliderControls}>
                 <button><span className="material-symbols-outlined">chevron_left</span></button>
@@ -20,7 +21,7 @@ const ImmersiveSeries: React.FC = () => {
         </div>
         
         <div className={styles.immersiveSlider}>
-            {IMMERSIVE_SERIES.map((series, i) => (
+            {IMMERSIVE_SERIES.map((series: any, i: number) => (
                 <SectionReveal key={i} className={styles.seriesCard}>
                     <ArtisticCard>
                       <div className={styles.seriesImage}>
