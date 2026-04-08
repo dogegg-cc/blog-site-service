@@ -60,9 +60,20 @@
     justify-content: center;
   }
 
-  a {
+  .emailWrapper {
+    position: relative;
+  }
+
+  a, .trigger {
     color: @text-on-surface-variant;
     transition: all @duration-default;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
     &:hover {
       color: @color-primary;
@@ -71,6 +82,68 @@
 
     span {
       font-size: 2rem;
+    }
+  }
+
+  .emailTooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: fade(@bg-surface-container, 80%);
+    backdrop-filter: blur(12px);
+    border: 1px solid fade(@color-outline, 20%);
+    padding: 8px 12px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+    z-index: 100;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: fade(@bg-surface-container, 80%);
+    }
+
+    .emailText {
+      font-size: 0.9rem;
+      color: @text-on-surface;
+      font-family: monospace;
+    }
+
+    .copyBtn {
+      background: fade(@color-primary, 10%);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: @color-primary;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: fade(@color-primary, 20%);
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 }
