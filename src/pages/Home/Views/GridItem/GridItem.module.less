@@ -1,4 +1,5 @@
 @import '@/styles/design-tokens.less';
+@import '../Common/Shared.module.less';
 
 .curatedGrid {
   background-color: @bg-surface-container-low;
@@ -61,18 +62,22 @@
   font-size: 1.5rem;
   font-family: @font-headline;
   margin: 0.5rem 0;
+  .ellipsis-single()
 }
 
 .gridDesc {
   color: @text-on-surface-variant;
   font-size: 0.875rem;
   line-height: 1.6;
+  .ellipsis-multiline(3);
 }
 
-.gridTags {
-  margin-top: 1rem;
-  font-size: 0.75rem;
-  color: @text-on-surface-variant;
-  font-style: italic;
-  opacity: 0.6;
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  
+  span {
+    font-size: 0.75rem;
+    color: @text-on-surface-variant;
+  }
 }

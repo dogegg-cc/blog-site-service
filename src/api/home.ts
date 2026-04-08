@@ -27,6 +27,7 @@ export interface Article {
   bannerUrl: string;
   category: Category;
   tags: Tag[];
+  createdAt: string;
 }
 
 export interface ModuleContent {

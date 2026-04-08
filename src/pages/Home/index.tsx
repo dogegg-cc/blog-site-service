@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './Home.module.less';
 import Hero from './Views/Hero';
-import Musings from './Views/Musings';
-import CuratedGrid from './Views/CuratedGrid';
+import ListItem from './Views/ListItem';
+import GridItem from './Views/GridItem';
 import ImmersiveSeries from './Views/ImmersiveSeries';
 import VisualJournal from './Views/VisualJournal';
-import { getHomeData, type HomeData } from '@/api/home';
+import { getHomeData, type HomeData, type PageModule } from '@/api/home';
 
 const Home: React.FC = () => {
   const [homeData, setHomeData] = React.useState<HomeData | null>(null);
@@ -26,18 +26,38 @@ const Home: React.FC = () => {
     return null;
   };
 
+  const renderModules = () => {
+    if (!homeData?.pageModule) return null;
+    return homeData.pageModule.map((module) => {
+      switch (module.type) {
+        case 'POST_LIST':
+          return renderArticleView(module);
+        case 'PHOTO_GALLERY':
+          return <VisualJournal key={module.id} />;
+        default:
+          return null;
+      }
+    });
+  };
+
+  const renderArticleView = (item: PageModule) => {
+    switch (item.styleType) {
+      case 'list':
+        return <ListItem module={item} />;
+      case 'grid':
+        return <GridItem module={item} />;
+      case 'carousel':
+        return <ImmersiveSeries />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className={styles.homeContainer}>
       {/* Hero Section */}
       {renderHero()}
-      {/* Recent Musings */}
-      <Musings />
-      {/* Curated Grid */}
-      <CuratedGrid />
-      {/* Immersive Series (Slider) */}
-      <ImmersiveSeries />
-      {/* Visual Journal (Photo Wall) */}
-      <VisualJournal />
+      {renderModules()}
     </div>
   );
 };
