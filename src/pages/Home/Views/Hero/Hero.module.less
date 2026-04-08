@@ -23,9 +23,9 @@
 
 .heroTitle {
   font-family: @font-headline;
-  font-size: clamp(4rem, 10vw, 8rem);
+  font-size: clamp(2rem, 8vw, 6rem);
   font-weight: 800;
-  line-height: 1;
+  line-height: 10rem;
   margin-bottom: 2rem;
   font-style: italic;
   letter-spacing: -0.02em;
@@ -34,11 +34,12 @@
     color: @color-primary;
     display: block;
     text-shadow: 0 0 30px fade(@color-primary, 20%);
+    font-size: clamp(4rem, 10vw, 8rem);
   }
 }
 
 .heroDesc {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 300;
   color: @text-on-surface-variant;
   line-height: 1.6;
@@ -69,7 +70,7 @@
     }
 
     span {
-      font-size: 2.5rem;
+      font-size: 2rem;
     }
   }
 }

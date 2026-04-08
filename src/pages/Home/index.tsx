@@ -9,14 +9,6 @@ import VisualJournal from './Views/VisualJournal';
 const Home: React.FC = () => {
   return (
     <div className={styles.homeContainer}>
-      {/* Top Navigation */}
-      <nav className={styles.topNav}>
-          <div className={styles.navCapsule}>
-              <a href="#" className={styles.navItemActive}>首页<span></span></a>
-              <a href="#" className={styles.navItem}>文章</a>
-          </div>
-      </nav>
-
       {/* Hero Section */}
       <Hero />
 
@@ -31,19 +23,6 @@ const Home: React.FC = () => {
 
       {/* Visual Journal (Photo Wall) */}
       <VisualJournal />
-
-      {/* Footer */}
-      <footer className={styles.footer}>
-          <div className={styles.footerLinks}>
-              <a href="#">GITHUB</a>
-              <a href="#">EMAIL</a>
-              <a href="#">TWITTER</a>
-          </div>
-          <p className={styles.copyright}>© Jiao Pengyou. Reg No. 88888888</p>
-          <div className={styles.footerIcon}>
-              <span className="material-symbols-outlined">stat_0</span>
-          </div>
-      </footer>
     </div>
   );
 };
