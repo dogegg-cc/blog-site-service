@@ -73,11 +73,11 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
             </SectionReveal>
             <SectionReveal direction='right' delay={0.2}>
               <TextType
-                text={['一个不太靠谱的程序猿', info.slogan ?? '']}
+                text={['所有的 Bug 都是有因果的', info.slogan ?? '']}
                 className={styles.heroDesc}
-                typingSpeed={200}
+                typingSpeed={150}
                 deletingSpeed={200}
-                pauseDuration={5000}
+                loop={false}
               />
             </SectionReveal>
             <SectionReveal direction='right' delay={0.4}>
