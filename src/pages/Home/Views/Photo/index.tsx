@@ -70,6 +70,17 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
 
   return (
     <section className={styles.visualJournal}>
+      <div className={styles.journalHeader}>
+        <GlitchText
+          speed={3}
+          enableShadows
+          enableOnHover={false}
+          className={styles.journalTitle}
+        >
+          {title}
+        </GlitchText>
+      </div>
+
       <div className={styles.photoWallContainer}>
         {/* 背景大字增加艺术氛围：包裹一层静态定位容器以规避动画 Transform 覆盖 */}
         <div className={styles.titleAnchor}>
