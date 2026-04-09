@@ -26,24 +26,33 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
     return imageUrls.map((url, index) => {
       // 使用基于 url 的稳定随机数计算布局属性，确保结果是确定的（Pure）
       const seed = url || String(index);
-      
-      const angle = total > 0 
-        ? (index / total) * Math.PI * 2 + (getStableRandom(seed, 1) * 0.4 - 0.2)
-        : 0;
-      
-      const radiusX = 35 + getStableRandom(seed, 2) * 10; 
-      const radiusY = 35 + getStableRandom(seed, 3) * 10;
 
-      const leftOffset = 50 + Math.cos(angle) * radiusX;
-      const topOffset = 50 + Math.sin(angle) * radiusY;
+      const angle =
+        total > 0
+          ? (index / total) * Math.PI * 2 +
+            (getStableRandom(seed, 1) * 0.4 - 0.2)
+          : 0;
+
+      const radiusX = 35 + getStableRandom(seed, 2) * 10;
+      const radiusY = 40 + getStableRandom(seed, 3) * 10;
+
+      // 计算原始偏移
+      let leftOffset = 50 + Math.cos(angle) * radiusX;
+      let topOffset = 50 + Math.sin(angle) * radiusY;
+
+      // 边界约束：确保照片中心点不会太靠近边缘，从而防止照片边缘溢出
+      // 考虑到照片高度，top 限制在 15% - 85% 之间
+      topOffset = Math.max(15, Math.min(85, topOffset));
+      // left 限制在 12% - 88% 之间
+      leftOffset = Math.max(12, Math.min(88, leftOffset));
 
       const rotate = Math.floor(getStableRandom(seed, 4) * 24) - 12;
-      const width = 11 + getStableRandom(seed, 5) * 5; 
+      const width = 11 + getStableRandom(seed, 5) * 5;
       const zIndex = Math.floor(getStableRandom(seed, 6) * 10) + 10;
       const aspect = getStableRandom(seed, 7) > 0.5 ? '4/5' : '3/2';
       const directions = ['up', 'down', 'left', 'right'] as const;
       const direction = directions[Math.floor(getStableRandom(seed, 8) * 4)];
-      
+
       return {
         url: getFullImageUrl(url),
         rotate,
@@ -62,17 +71,11 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
 
   return (
     <section className={styles.visualJournal}>
-      <div className={styles.journalHeader}>
-        <SectionReveal>
-          <h2 className={sharedStyles.sectionTitle}>{title}</h2>
-        </SectionReveal>
-      </div>
-
       <div className={styles.photoWallContainer}>
         {/* 背景大字增加艺术氛围：包裹一层静态定位容器以规避动画 Transform 覆盖 */}
         <div className={styles.titleAnchor}>
           <SectionReveal delay={0.1} className={styles.albumTitle}>
-            {intro}
+            <div className={styles.albumTitleInner}>{title}</div>
           </SectionReveal>
         </div>
 

@@ -48,8 +48,6 @@
 }
 
 .albumTitle {
-  transform: rotateY(20deg) rotateZ(20deg); // Y轴旋转20度，Z轴旋转20度
-  transform-origin: bottom left; 
   font-family: @font-headline;
   font-size: clamp(4rem, 15vw, 10rem); 
   font-weight: 150;
@@ -58,6 +56,12 @@
   mix-blend-mode: overlay;
   opacity: 0.15;
   white-space: nowrap; 
+}
+
+.albumTitleInner {
+  transform: rotateY(45deg) rotateZ(-3deg); // 在不带动画的内层应用 3D 旋转
+  transform-style: preserve-3d;
+  display: inline-block;
 }
 
 .photoAnchor {
