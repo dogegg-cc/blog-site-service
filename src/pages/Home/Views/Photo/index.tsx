@@ -103,9 +103,6 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
               >
                 <img src={config.url} alt={`Snap ${i}`} />
               </div>
-              <div className={styles.photoFooter}>
-                <span>IMG_{String(i + 1).padStart(2, '0')}</span>
-              </div>
             </SectionReveal>
           </div>
         ))}

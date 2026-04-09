@@ -66,7 +66,7 @@ const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
         y: diff * -10, // 每张向上偏移 10px 增加深度感
         scale: 1 - diff * 0.05, // 每张缩小 5%
         zIndex: articles.length - index,
-        opacity: 1 - diff * 0.2, // 越后越透明
+        opacity: 1 - diff * 0.1, // 越后越透明
         rotate: diff * 2, // 轻微旋转
       };
     };
