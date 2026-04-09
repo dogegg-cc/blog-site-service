@@ -29,12 +29,7 @@ const ArticleDetail: React.FC = () => {
     fetchArticle();
   }, [id]);
 
-  // 2. 页面初始化置顶逻辑：防止 SPA 导航时的滚动位置遗留
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
-
-  // 3. 交互逻辑 Hooks (目录同步)
+  // 2. 交互逻辑 Hooks (目录同步)
   const { toc, activeId, scrollToAnchor } = useScrollSync({
     article,
     loading

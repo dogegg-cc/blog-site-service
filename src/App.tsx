@@ -1,5 +1,6 @@
 import { AppRouter } from '@/router/AppRouter';
 import { FloatingNav } from './components/Navigation/FloatingNav';
+import ScrollToTop from './components/Common/ScrollToTop';
 import LiquidEther from '@/components/bits/LiquidEther';
 import './App.less';
 
@@ -12,8 +13,9 @@ function App() {
         <LiquidEther />
       </div>
 
-      {/* Navigation: Floating Capsule */}
+      {/* Navigation & Utilities */}
       <FloatingNav />
+      <ScrollToTop />
 
       {/* Main Content Area */}
       <div className='page-content'>
