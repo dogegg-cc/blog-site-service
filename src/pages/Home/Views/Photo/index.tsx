@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import styles from './PhotoItem.module.less';
-import sharedStyles from '../Common/Shared.module.less';
 import type { PageModule } from '@/api/home';
 import { getFullImageUrl } from '@/utils/url';
-
+import GlitchText from '@/components/bits/GlitchText/GlitchText';
 const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
-  const { title, intro, content } = module;
+  const { title, content } = module;
   const { imageUrls = [] } = content;
 
   // 生成稳定的随机艺术布局配置
@@ -75,7 +74,14 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
         {/* 背景大字增加艺术氛围：包裹一层静态定位容器以规避动画 Transform 覆盖 */}
         <div className={styles.titleAnchor}>
           <SectionReveal delay={0.1} className={styles.albumTitle}>
-            <div className={styles.albumTitleInner}>{title}</div>
+            <GlitchText
+              speed={3}
+              enableShadows
+              enableOnHover={false}
+              className={styles.albumTitle}
+            >
+              {title}
+            </GlitchText>
           </SectionReveal>
         </div>
 
