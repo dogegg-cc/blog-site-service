@@ -4,7 +4,7 @@ import { Copy, Check } from 'lucide-react';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import styles from './Hero.module.less';
 import { type UserInfo } from '@/api/home';
-
+import TextType from '@/components/bits/TextType/TextType';
 const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
   const [showEmail, setShowEmail] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -14,17 +14,20 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
   // 滑动或点击外部自动隐藏
   useEffect(() => {
     const handleEvents = (e: MouseEvent | TouchEvent) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
         setShowEmail(false);
       }
     };
-    
+
     const handleScroll = () => setShowEmail(false);
 
     window.addEventListener('mousedown', handleEvents);
     window.addEventListener('touchstart', handleEvents);
     window.addEventListener('scroll', handleScroll);
-    
+
     return () => {
       window.removeEventListener('mousedown', handleEvents);
       window.removeEventListener('touchstart', handleEvents);
@@ -43,17 +46,20 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
     }, 300);
   };
 
-  const handleCopy = useCallback(async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!info.email) return;
-    try {
-      await navigator.clipboard.writeText(info.email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
-  }, [info.email]);
+  const handleCopy = useCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (!info.email) return;
+      try {
+        await navigator.clipboard.writeText(info.email);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    },
+    [info.email],
+  );
 
   return (
     <section className={styles.hero}>
@@ -66,21 +72,27 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
               </h1>
             </SectionReveal>
             <SectionReveal direction='right' delay={0.2}>
-              <p className={styles.heroDesc}>{info.slogan}</p>
+              <TextType
+                text={['一个不太靠谱的程序猿', info.slogan ?? '']}
+                className={styles.heroDesc}
+                typingSpeed={200}
+                deletingSpeed={200}
+                pauseDuration={5000}
+              />
             </SectionReveal>
             <SectionReveal direction='right' delay={0.4}>
               <div className={styles.heroSocial}>
                 <a href={info.github} target='_blank' rel='noopener noreferrer'>
                   <span className='material-symbols-outlined'>code</span>
                 </a>
-                
-                <div 
-                  className={styles.emailWrapper} 
+
+                <div
+                  className={styles.emailWrapper}
                   ref={wrapperRef}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <button 
+                  <button
                     className={styles.trigger}
                     onClick={() => setShowEmail(!showEmail)}
                   >
@@ -89,7 +101,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
 
                   <AnimatePresence>
                     {showEmail && (
-                      <motion.div 
+                      <motion.div
                         className={styles.emailTooltip}
                         initial={{ opacity: 0, scale: 0.9, y: 10, x: '-50%' }}
                         animate={{ opacity: 1, scale: 1, y: 0, x: '-50%' }}
@@ -108,7 +120,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
               </div>
             </SectionReveal>
           </div>
-          
+
           <div className={styles.sculptureWrapper}>
             <div className={styles.glowOrb} />
             <div className={styles.liquidSculpture} />
