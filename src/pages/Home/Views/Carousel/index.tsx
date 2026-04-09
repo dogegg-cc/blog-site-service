@@ -43,7 +43,7 @@ const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
           x: -1000,
           scale: 0.8,
           opacity: 0,
-          zIndex: 0,
+          zIndex: -10,
           rotate: -20,
         };
       }
