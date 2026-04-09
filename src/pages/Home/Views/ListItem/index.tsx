@@ -7,14 +7,20 @@ import type { PageModule, Article } from '@/api/home';
 import { getFullImageUrl } from '@/utils/url';
 import { formatTime } from '@/utils/time';
 
+import { useNavigate } from 'react-router-dom';
+
 const ListItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
+  const navigate = useNavigate();
   const { title, intro, content } = module;
   const { articles } = content;
 
   const renderList = articles?.map((article: Article, i: number) => {
     return (
       <SectionReveal key={article.id} delay={i * 0.1}>
-        <ArtisticCard className={styles.articleCard}>
+        <ArtisticCard 
+          className={styles.articleCard}
+          onClick={() => navigate(`/articles/${article.id}`)}
+        >
           <div className={styles.articleImage}>
             <img src={getFullImageUrl(article.bannerUrl)} alt={article.title} />
           </div>

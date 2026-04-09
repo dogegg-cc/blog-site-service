@@ -6,16 +6,20 @@ interface ArtisticCardProps {
   children: React.ReactNode;
   className?: string;
   hoverScale?: number;
+  onClick?: () => void;
 }
 
 const ArtisticCard: React.FC<ArtisticCardProps> = ({ 
   children, 
   className = '',
-  hoverScale = 1.02
+  hoverScale = 1.02,
+  onClick
 }) => {
   return (
     <motion.div
       className={`${styles.card} ${className}`}
+      style={{ cursor: onClick ? 'pointer' : 'default' }}
+      onClick={onClick}
       whileHover={{ 
         y: -8,
         scale: hoverScale,

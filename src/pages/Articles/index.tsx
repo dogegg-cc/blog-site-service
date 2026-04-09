@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import ArtisticCard from '@/components/Common/ArtisticCard';
 import Pagination from '@/components/Common/Pagination';
@@ -9,6 +10,7 @@ import { formatTime } from '@/utils/time';
 import styles from './Articles.module.less';
 
 const Articles: React.FC = () => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [total, setTotal] = useState(0);
@@ -132,7 +134,10 @@ const Articles: React.FC = () => {
             ) : articles.length > 0 ? (
               articles.map((article, i) => (
                 <SectionReveal key={article.id} delay={i * 0.05} amount={0.1}>
-                  <ArtisticCard className={styles.articleCard}>
+                  <ArtisticCard 
+                    className={styles.articleCard}
+                    onClick={() => navigate(`/articles/${article.id}`)}
+                  >
                     <div className={styles.articleImage}>
                       <img
                         src={getFullImageUrl(article.bannerUrl)}

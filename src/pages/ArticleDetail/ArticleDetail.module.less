@@ -1,147 +1,334 @@
 @import '@/styles/design-tokens.less';
 
 .detailContainer {
-  width: 100%;
-}
-
-.tocSidebar {
-  width: 300px;
-  flex-shrink: 0;
-  
-  @media (max-width: 1024px) {
-    display: none;
-  }
-}
-
-.tocSticky {
-  position: sticky;
-  top: 160px;
-}
-
-.tocHeader {
+  min-height: 100vh;
+  background-color: @bg-surface;
+  color: @text-on-surface;
   font-family: @font-body;
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  margin-bottom: 2rem;
-  color: @text-on-surface-variant;
 }
 
-.tocNav {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  padding-left: 0.5rem;
-  border-left: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.tocItem {
+// 1. Hero Header
+.heroSection {
+  position: relative;
+  height: 90vh;
+  width: 100%;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.875rem;
-  color: @text-on-surface-variant;
-  transition: all @duration-fast;
-  
-  &:hover {
-    color: @color-primary;
-    transform: translateX(4px);
+  justify-content: center;
+
+  .heroBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, @bg-surface 0%, transparent 50%, rgba(0,0,0,0.4) 100%);
+      backdrop-filter: blur(2px);
+    }
+  }
+
+  .heroContent {
+    position: relative;
+    z-index: 10;
+    max-width: 1200px;
+    padding: 0 24px;
+    text-align: center;
+
+    .meta {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      font-size: 12px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: @color-primary;
+
+      span {
+        padding: 4px 12px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        border-radius: @radius-full;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .title {
+      font-family: @font-headline;
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 1.1;
+      font-weight: 300;
+      margin-bottom: 48px;
+      text-shadow: 0 20px 40px rgba(0,0,0,0.5);
+
+      span {
+        font-style: italic;
+        color: @color-primary;
+      }
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+
+      .tagItem {
+        padding: 8px 16px;
+        border-radius: @radius-full;
+        background: rgba(26, 26, 26, 0.4);
+        backdrop-filter: blur(12px);
+        border: 1px solid @color-outline-variant;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+    }
   }
 }
 
-.tocDot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: transparent;
-  border: 1px solid @color-outline;
-  transition: all @duration-fast;
-}
+// 2. Content Layout
+.layoutGrid {
+  position: relative;
+  max-width: 1200px;
+  margin: -120px auto 0;
+  padding: 0 24px 120px;
+  display: flex !important;
+  flex-direction: row;
+  align-items: stretch; // 核心修复：确保侧边栏高度填满容器
+  gap: 64px;
 
-.tocItem:hover .tocDot {
-  background-color: @color-primary;
-  border-color: @color-primary;
-  box-shadow: 0 0 10px @color-primary;
-}
-
-.contentArea {
-  flex: 1;
-  max-width: 800px;
-}
-
-.postMeta {
-  font-size: 0.8125rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 1.5rem;
-  
-  span:first-child {
-    color: @color-primary;
-    font-weight: 800;
-  }
-  
-  span:last-child {
-    color: @text-on-surface-variant;
+  @media (max-width: 992px) { // 稍微调高断点以保证平板体验
+    flex-direction: column;
+    margin-top: -60px;
+    gap: 32px;
   }
 }
 
-.postTitle {
-  font-size: clamp(3rem, 6vw, 5rem);
-  margin-bottom: 2rem;
-}
-
-.postExcerpt {
-  font-size: 1.5rem;
-  color: @text-on-surface-variant;
-  line-height: 1.6;
-  margin-bottom: 5rem;
-  font-weight: 300;
-}
-
-.postBody {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: #fff;
-  opacity: 0.9;
-  
-  h2 {
-    font-size: 2.5rem;
-    margin: 4rem 0 2rem;
-    scroll-margin-top: 140px;
-  }
-  
-  p {
-    margin-bottom: 2rem;
-  }
-}
-
-.quoteCard {
-  margin: 4rem 0;
-  padding: 3rem !important;
-  font-family: @font-headline;
-  font-size: 1.75rem;
-  font-style: italic;
-  text-align: center;
-  border-left: 4px solid @color-primary !important;
-  background-color: @bg-surface-container-low !important;
-}
-
-.postImage {
-  margin: 5rem 0;
-  
-  img {
-    width: 100%;
-    border-radius: @radius-lg;
-    box-shadow: @ambient-shadow;
-  }
-}
-
-.caption {
+// 3. TOC Sidebar
+.tocSidebar {
+  width: 220px;
+  flex-shrink: 0;
   display: block;
-  text-align: center;
-  font-size: 0.875rem;
-  color: @text-on-surface-variant;
-  margin-top: 1.5rem;
-  font-style: italic;
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  .tocSticky {
+    position: sticky;
+    top: 100px; // 调整为更靠近顶部，且避开导航栏高度
+
+    .tocLabel {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: @text-on-surface-variant;
+      margin-bottom: 32px;
+      padding-left: 8px;
+    }
+
+    .tocNav {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(243, 255, 205, 0.1);
+      }
+
+      .tocNode {
+        position: relative;
+        padding: 6px 0 6px 24px;
+        font-size: 14px;
+        color: @text-on-surface-variant;
+        text-decoration: none;
+        transition: all @duration-fast @ease-artistic;
+        display: block;
+        line-height: 1.4;
+
+        &[data-level="2"] {
+          font-weight: 500;
+          color: @text-on-surface;
+          margin-top: 8px;
+        }
+
+        &[data-level="3"] {
+          padding-left: 40px;
+          font-size: 13px;
+          opacity: 0.8;
+          
+          &::before {
+            left: 12px;
+            width: 6px;
+          }
+        }
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: -4px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 8px;
+          height: 1px;
+          background: rgba(243, 255, 205, 0.1);
+          transition: all @duration-fast;
+        }
+
+        &:hover {
+          color: @color-primary;
+          transform: translateX(4px);
+        }
+
+        &.active {
+          color: @color-primary;
+          opacity: 1;
+          
+          &::before {
+            background: @color-primary;
+            width: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 4. Main Article
+.articleCard {
+  flex: 1;
+  min-width: 0; // 防止长文本/代码块撑破 flex 容器
+  background: rgba(14, 14, 14, 0.5);
+  backdrop-filter: blur(20px);
+  border-radius: @radius-lg;
+  border: 1px solid @color-outline-variant;
+  padding: 48px;
+  box-shadow: @ambient-shadow;
+
+  .markdownBody {
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+
+    h2 {
+      font-family: @font-headline;
+      font-size: 32px;
+      margin: 64px 0 32px;
+      color: #fff;
+    }
+
+    h3 {
+      font-family: @font-headline;
+      font-size: 24px;
+      margin: 48px 0 24px;
+      color: #fff;
+    }
+
+    p {
+      margin-bottom: 24px;
+    }
+
+    // 首字下沉 (只对第一个 p 有效)
+    & > p:first-of-type {
+      &::first-letter {
+        font-family: @font-headline;
+        font-size: 72px;
+        float: left;
+        margin-right: 12px;
+        color: @color-primary;
+        line-height: 1;
+        margin-top: 8px;
+      }
+    }
+
+    blockquote {
+      margin: 48px 0;
+      padding: 0 0 0 32px;
+      border-left: 2px solid fade(@color-primary, 40%);
+      font-family: @font-headline;
+      font-style: italic;
+      font-size: 24px;
+      color: #fff;
+    }
+
+    ul, ol {
+      margin: 32px 0;
+      padding-left: 24px;
+      li {
+        margin-bottom: 12px;
+      }
+    }
+
+    code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: transparent !important;
+      padding: 0 !important;
+      margin: 32px 0 !important;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: @radius-default;
+      margin: 48px 0;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+  }
+}
+
+.loading {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: @font-headline;
+  font-size: 24px;
+  color: @color-primary;
+  background: @bg-surface;
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    height: 60vh;
+  }
+  
+  .articleCard {
+    padding: 24px;
+    border-radius: @radius-default;
+  }
+
+  .markdownBody {
+    font-size: 16px;
+    
+    h2 {
+      font-size: 24px;
+    }
+    
+    & > p:first-of-type::first-letter {
+      font-size: 56px;
+    }
+  }
 }
