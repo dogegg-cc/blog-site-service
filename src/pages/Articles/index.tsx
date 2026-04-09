@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import ArtisticCard from '@/components/Common/ArtisticCard';
 import Pagination from '@/components/Common/Pagination';
@@ -11,15 +11,16 @@ import styles from './Articles.module.less';
 
 const Articles: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<Category[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // Filter States
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedTag, setSelectedTag] = useState<string>('all');
-  const [currentPage, setCurrentPage] = useState(1);
+  // Filter States from URL
+  const selectedCategory = searchParams.get('category') || 'all';
+  const selectedTag = searchParams.get('tag') || 'all';
+  const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const PAGE_SIZE = 10;
 
   const fetchData = useCallback(async () => {
@@ -58,14 +59,32 @@ const Articles: React.FC = () => {
   }, [fetchData]);
 
   const handleCategoryChange = (id: string) => {
-    setSelectedCategory(id);
-    setSelectedTag('all'); // Reset tag when category changes
-    setCurrentPage(1);
+    const newParams = new URLSearchParams(searchParams);
+    if (id === 'all') {
+      newParams.delete('category');
+    } else {
+      newParams.set('category', id);
+    }
+    newParams.delete('tag'); // Reset tag when category changes
+    newParams.set('page', '1');
+    setSearchParams(newParams);
   };
 
   const handleTagChange = (id: string) => {
-    setSelectedTag(id);
-    setCurrentPage(1);
+    const newParams = new URLSearchParams(searchParams);
+    if (id === 'all') {
+      newParams.delete('tag');
+    } else {
+      newParams.set('tag', id);
+    }
+    newParams.set('page', '1');
+    setSearchParams(newParams);
+  };
+
+  const handlePageChange = (page: number) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', page.toString());
+    setSearchParams(newParams);
   };
 
   const currentCategoryObj = categories.find((c) => c.id === selectedCategory);
@@ -175,7 +194,7 @@ const Articles: React.FC = () => {
                 current={currentPage}
                 total={total}
                 pageSize={PAGE_SIZE}
-                onChange={setCurrentPage}
+                onChange={handlePageChange}
               />
             </SectionReveal>
           )}
