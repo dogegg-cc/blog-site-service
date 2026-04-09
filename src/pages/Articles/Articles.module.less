@@ -16,102 +16,153 @@
   }
 }
 
-.pageTitle {
-  font-size: 5rem;
-  margin-bottom: 1rem;
-  font-family: @font-headline;
-  @media (max-width: 768px) {
-    font-size: 3rem;
+// 布局重构
+.layoutWrapper {
+  display: flex;
+  gap: 4rem;
+  align-items: flex-start;
+  margin-top: 2rem;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: 2rem;
   }
 }
 
-.pageSubtitle {
-  color: @text-on-surface-variant;
-  font-size: 1.25rem;
-  margin-bottom: 4rem;
-  font-family: @font-body;
+// 侧边栏（筛选树）
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 8rem; // 距离顶部导航栏的距离
+  height: calc(100vh - 12rem);
+  overflow-y: auto;
+  padding-right: 1rem;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: @color-outline-variant;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    position: relative;
+    top: 0;
+    height: auto;
+    overflow-y: visible;
+  }
 }
 
-// 筛选器样式
-.filterSection {
-  position: sticky;
-  top: 6rem; // Fixed below the floating nav (approx height)
-  z-index: 100;
-  padding: 1.5rem 0;
-  margin-bottom: 3rem;
+.treeNav {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-
-  @media (max-width: 768px) {
-    top: 0; // Full height on mobile if nav moves to bottom
-  }
+  gap: 0.5rem;
 }
 
-.filterRow {
+.treeGroup {
+  margin-bottom: 0.5rem;
+}
+
+.treeItem {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  width: 100%;
-}
-
-.filterLabel {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: @text-on-surface;
-  min-width: 50px;
-  flex-shrink: 0; // Keep label fixed width
-}
-
-.filterOptions {
-  flex: 1;
-  display: flex;
   gap: 0.75rem;
-  flex-wrap: wrap; // Wrap on desktop
-  overflow-x: hidden;
-
-  @media (max-width: 768px) {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none; // Firefox
-    &::-webkit-scrollbar { display: none; } // Chrome/Safari
-    padding-right: 2rem;
-    mask-image: linear-gradient(to right, black 90%, transparent 100%); // Subtle edge fade
-  }
-}
-
-.filterItem {
-  padding: 0.5rem 1.25rem;
-  border-radius: @radius-full;
-  border: 1px solid @color-outline-variant;
-  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  border-radius: @radius-default;
   color: @text-on-surface-variant;
   cursor: pointer;
   transition: all @duration-fast @ease-artistic;
-  background: transparent;
-  white-space: nowrap; // Prevent text from wrapping into multiple lines
-  flex-shrink: 0; // Prevent the item from being squeezed
+  font-family: @font-body;
+  font-size: 0.9375rem;
+  user-select: none;
+  border: 1px solid transparent;
 
   &:hover {
-    border-color: @color-primary;
+    background: @bg-surface-container-low;
     color: @text-on-surface;
+    border-color: @color-outline-variant;
   }
 
   &.active {
-    background: @color-primary;
-    color: @bg-surface;
+    background: @bg-surface-container-high;
+    color: @color-primary;
+    font-weight: 600;
     border-color: @color-primary;
     box-shadow: @glow-shadow;
+    
+    .treeIcon {
+      color: @color-primary;
+    }
+  }
+
+  .treeIcon {
+    font-size: 1.25rem;
+    color: @text-on-surface-variant;
+    opacity: 0.7;
+    transition: transform @duration-fast;
+  }
+
+  &.hasChildren.expanded .treeIcon {
+      transform: rotate(90deg);
   }
 }
 
-// 列表样式（复用 Home/Views/ListItem 的逻辑，但在本地定义以确保独立性）
-.list {
+.treeSubList {
+  margin-left: 1.5rem;
+  margin-top: 0.25rem;
+  padding-left: 1.25rem;
+  border-left: 1px solid @color-outline-variant;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 0.25rem;
+}
+
+.treeSubItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: @radius-default;
+  font-size: 0.8125rem;
+  color: @text-on-surface-variant;
+  cursor: pointer;
+  transition: all @duration-fast;
+
+  &:hover {
+    color: @text-on-surface;
+    background: @bg-surface-container-low;
+  }
+
+  &.active {
+    color: @color-primary;
+    font-weight: 600;
+    background: @bg-surface-container-low;
+  }
+
+  .hashIcon {
+    opacity: 0.4;
+    font-size: 0.75rem;
+  }
+}
+
+.listArea {
+  flex: 1;
+  min-width: 0; // 防止 flex 项溢出
+}
+
+// 筛选器样式（废弃旧的横排样式，或在移动端保留）
+.filterSection {
+  display: none; // 在分栏模式下默认隐藏
+
+  @media (max-width: 1024px) {
+    display: flex; // 移动端可以考虑恢复横向滚动或特定布局
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
 }
 
 .articleCard {
