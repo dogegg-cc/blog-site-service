@@ -96,33 +96,78 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
           </SectionReveal>
         </div>
 
-        {photoConfigs.map((config, i) => (
-          <div
-            key={i}
-            className={styles.photoAnchor}
-            style={{ top: config.style.top, left: config.style.left }}
-          >
-            <SectionReveal
-              className={styles.photoPrint}
-              delay={config.delay}
-              direction={config.direction}
-              style={
-                {
-                  transform: `rotate(${config.rotate}deg)`,
-                  width: config.style.width,
-                  zIndex: config.style.zIndex,
-                } as React.CSSProperties
-              }
+        {/* 1. 桌面端展示模式：绝对定位 + 艺术散落 */}
+        <div className={styles.desktopScatter}>
+          {photoConfigs.map((config, i) => (
+            <div
+              key={i}
+              className={styles.photoAnchor}
+              style={{ top: config.style.top, left: config.style.left }}
             >
-              <div
-                className={styles.photoWrapper}
-                style={{ aspectRatio: config.aspect }}
+              <SectionReveal
+                className={styles.photoPrint}
+                delay={config.delay}
+                direction={config.direction}
+                style={
+                  {
+                    transform: `rotate(${config.rotate}deg)`,
+                    width: config.style.width,
+                    zIndex: config.style.zIndex,
+                  } as React.CSSProperties
+                }
               >
-                <img src={config.url} alt={`Snap ${i}`} />
-              </div>
-            </SectionReveal>
+                <div
+                  className={styles.photoWrapper}
+                  style={{ aspectRatio: config.aspect }}
+                >
+                  <img src={config.url} alt={`Snap ${i}`} />
+                </div>
+              </SectionReveal>
+            </div>
+          ))}
+        </div>
+
+        {/* 2. 移动端展示模式：两列 Masonry 瀑布流（头部交错不对齐） */}
+        <div className={styles.mobileMasonry}>
+          {/* 左列 */}
+          <div className={styles.masonryColumn}>
+            {photoConfigs.filter((_, i) => i % 2 === 0).map((config, i) => (
+              <SectionReveal
+                key={`left-${i}`}
+                className={styles.photoPrint}
+                delay={config.delay * 0.5}
+                direction="up"
+                style={{ width: '100%', transform: 'none' }} // 移动端取消倾斜
+              >
+                <div
+                  className={styles.photoWrapper}
+                  style={{ aspectRatio: config.aspect }}
+                >
+                  <img src={config.url} alt={`Snap L-${i}`} />
+                </div>
+              </SectionReveal>
+            ))}
           </div>
-        ))}
+          {/* 右列 */}
+          <div className={styles.masonryColumn}>
+            {photoConfigs.filter((_, i) => i % 2 !== 0).map((config, i) => (
+              <SectionReveal
+                key={`right-${i}`}
+                className={styles.photoPrint}
+                delay={config.delay * 0.5}
+                direction="up"
+                style={{ width: '100%', transform: 'none' }}
+              >
+                <div
+                  className={styles.photoWrapper}
+                  style={{ aspectRatio: config.aspect }}
+                >
+                  <img src={config.url} alt={`Snap R-${i}`} />
+                </div>
+              </SectionReveal>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

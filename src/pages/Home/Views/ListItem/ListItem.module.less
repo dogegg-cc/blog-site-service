@@ -1,4 +1,5 @@
 @import '@/styles/design-tokens.less';
+@import '../Common/Shared.module.less';
 
 .musings {
   padding: 8rem 0;
@@ -86,11 +87,20 @@
   font-family: @font-headline;
   font-size: 2.25rem;
   transition: color @duration-fast;
+  @media (max-width: 768px) {
+    .one-text-line();
+    font-size: 1.5rem;
+  }
 }
 
 .articleDescText {
   color: @text-on-surface-variant;
   line-height: 1.6;
+  @media (max-width: 768px) {
+    .text-lines(3);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
 }
 
 .tags {
