@@ -10,6 +10,9 @@ const NAV_ITEMS = [
 
 export const FloatingNav: React.FC = () => {
   const location = useLocation();
+  const isArticleDetail = location.pathname.startsWith('/articles/') && location.pathname !== '/articles';
+
+  if (isArticleDetail) return null;
 
   return (
     <motion.nav className={styles.navWrapper}>

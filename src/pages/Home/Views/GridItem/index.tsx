@@ -1,19 +1,24 @@
 import React from 'react';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import ArtisticCard from '@/components/Common/ArtisticCard';
+import { useNavigate } from 'react-router-dom';
 import styles from './GridItem.module.less';
 import sharedStyles from '../Common/Shared.module.less';
 import type { PageModule, Article } from '@/api/home';
 import { getFullImageUrl } from '@/utils/url';
 
 const GridItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
+  const navigate = useNavigate();
   const { title, intro, content } = module;
   const { articles } = content;
 
   const renderList = articles?.map((article: Article, i: number) => {
     return (
       <SectionReveal key={article.id} delay={i * 0.15}>
-        <ArtisticCard className={styles.gridCard}>
+        <ArtisticCard 
+          className={styles.gridCard}
+          onClick={() => navigate(`/articles/${article.id}`)}
+        >
           <div className={styles.gridImage}>
             <img src={getFullImageUrl(article.bannerUrl)} alt={article.title} />
           </div>

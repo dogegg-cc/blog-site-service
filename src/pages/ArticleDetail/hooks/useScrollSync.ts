@@ -5,6 +5,7 @@ import {
   useMemo,
   isValidElement,
   type ReactNode,
+  type ReactElement,
 } from 'react';
 import type { ArticleDetail as ArticleDetailData } from '@/api/article';
 
@@ -25,7 +26,8 @@ export const getTextFromChildren = (children: ReactNode): string => {
       .join('');
   }
   if (isValidElement(children)) {
-    return getTextFromChildren(children.props.children);
+    // 使用类型断言解决 ts(18046) "children.props" 的类型为 "未知" 问题
+    return getTextFromChildren((children as ReactElement<{ children?: ReactNode }>).props.children);
   }
   return '';
 };
@@ -68,7 +70,7 @@ export const useScrollSync = ({ article, loading }: UseScrollSyncProps) => {
       items.push({ id: generateId(plainText), text: plainText, level });
     }
     return items;
-  }, [article?.content]);
+  }, [article]); // 修改依赖项为 article，匹配编译器推断并确保稳定性
 
   // 2. 实时坐标监听逻辑
   useEffect(() => {

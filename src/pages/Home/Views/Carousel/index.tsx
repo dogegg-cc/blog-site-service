@@ -2,12 +2,14 @@ import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import ArtisticCard from '@/components/Common/ArtisticCard';
+import { useNavigate } from 'react-router-dom';
 import styles from './Carousel.module.less';
 import type { Article, PageModule } from '@/api/home';
 import { getFullImageUrl } from '@/utils/url';
 
 const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
   ({ module }) => {
+    const navigate = useNavigate();
     const { title, intro, content } = module;
     const { articles = [] } = content;
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -132,7 +134,10 @@ const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
                         damping: 30,
                       }}
                     >
-                      <ArtisticCard className={styles.card}>
+                      <ArtisticCard 
+                        className={styles.card}
+                        onClick={() => navigate(`/articles/${article.id}`)}
+                      >
                         <div className={styles.seriesImage}>
                           <img
                             src={getFullImageUrl(article.bannerUrl)}
