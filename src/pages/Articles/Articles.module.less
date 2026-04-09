@@ -2,57 +2,214 @@
 
 .container {
   width: 100%;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+}
+
+.maxContainer {
+  max-width: 80rem; // 7xl
+  margin: 0 auto;
+  padding: 10rem 1.5rem 0; // Standard top padding (offset for nav)
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem 0;
+  }
 }
 
 .pageTitle {
   font-size: 5rem;
   margin-bottom: 1rem;
+  font-family: @font-headline;
+  @media (max-width: 768px) {
+    font-size: 3rem;
+  }
 }
 
 .pageSubtitle {
   color: @text-on-surface-variant;
   font-size: 1.25rem;
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
+  font-family: @font-body;
 }
 
-.list {
+// 筛选器样式
+.filterSection {
+  position: sticky;
+  top: 6rem; // Fixed below the floating nav (approx height)
+  z-index: 100;
+  padding: 1.5rem 0;
+  margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-}
+  gap: 1.5rem;
 
-.card {
-  padding: 2rem !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 1rem;
-  cursor: pointer;
-  
-  &:hover .title {
-    color: @color-primary;
+  @media (max-width: 768px) {
+    top: 0; // Full height on mobile if nav moves to bottom
   }
 }
 
-.meta {
+.filterRow {
   display: flex;
-  gap: 0.75rem;
   align-items: center;
-  font-size: 0.8125rem;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none; // Firefox
+  &::-webkit-scrollbar { display: none; } // Chrome/Safari
+}
+
+.filterLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  color: @text-on-surface;
+  min-width: 50px;
+}
+
+.filterOptions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.filterItem {
+  padding: 0.5rem 1.25rem;
+  border-radius: @radius-full;
+  border: 1px solid @color-outline-variant;
+  font-size: 0.875rem;
+  color: @text-on-surface-variant;
+  cursor: pointer;
+  transition: all @duration-fast @ease-artistic;
+  background: transparent;
+
+  &:hover {
+    border-color: @color-primary;
+    color: @text-on-surface;
+  }
+
+  &.active {
+    background: @color-primary;
+    color: @bg-surface;
+    border-color: @color-primary;
+    font-weight: 600;
+    box-shadow: @glow-shadow;
+  }
+}
+
+// 列表样式（复用 Home/Views/ListItem 的逻辑，但在本地定义以确保独立性）
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.articleCard {
+  background-color: @bg-surface-container-low !important;
+  flex-direction: row !important;
+  padding: 1.5rem !important;
+  gap: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all @duration-slow @ease-artistic;
+  cursor: pointer;
+
+  &:hover {
+    background-color: @bg-surface-container-high !important;
+    transform: translateY(-8px);
+    .articleTitle { color: @color-primary; }
+    .articleImage img { transform: scale(1); }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column !important;
+    gap: 1.5rem;
+  }
+}
+
+.articleImage {
+  width: 33.333%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: @radius-default;
+  background: @bg-surface-container;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    transition: transform @duration-slow @ease-artistic;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.articleContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.articleMeta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
   
   span:first-child {
     color: @color-primary;
     font-weight: 800;
   }
+  
+  span:last-child {
+    color: @text-on-surface-variant;
+  }
 }
 
-.dot {
-  opacity: 0.3;
-}
+.dot { opacity: 0.2; }
 
-.title {
-  font-size: 2.25rem;
+.articleTitle {
   font-family: @font-headline;
-  transition: color @duration-default;
+  font-size: 2rem;
+  transition: color @duration-fast;
+  margin: 0;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+.articleDescText {
+  color: @text-on-surface-variant;
+  line-height: 1.6;
+  font-size: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tags {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  
+  span {
+    font-size: 0.8125rem;
+    color: @text-on-surface-variant;
+    opacity: 0.8;
+  }
+}
+
+.loading, .empty {
+    text-align: center;
+    padding: 100px 0;
+    color: @text-on-surface-variant;
+    font-size: 1.25rem;
+    font-style: italic;
 }

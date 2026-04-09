@@ -1,36 +1,181 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import ArtisticCard from '@/components/Common/ArtisticCard';
+import Pagination from '@/components/Common/Pagination';
+import { getCategoryList, getArticleList, type Category } from '@/api/article';
+import type { Article } from '@/api/home';
+import { getFullImageUrl } from '@/utils/url';
+import { formatTime } from '@/utils/time';
 import styles from './Articles.module.less';
 
-const ARTICLES = [
-  { id: 1, title: 'The Architecture of Silence in UI', date: 'March 2024', category: 'Design' },
-  { id: 2, title: 'Performance as Art', date: 'February 2024', category: 'Development' },
-  { id: 3, title: 'Digital Impermanence', date: 'January 2024', category: 'Philosophy' },
-];
-
 const Articles: React.FC = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  // Filter States
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedTag, setSelectedTag] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_SIZE = 10;
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await getArticleList({
+        page: currentPage,
+        pageSize: PAGE_SIZE,
+        categoryId: selectedCategory === 'all' ? undefined : selectedCategory,
+        tagId: selectedTag === 'all' ? undefined : selectedTag,
+      });
+      setArticles(res.items);
+      setTotal(res.total);
+    } catch (error) {
+      console.error('Failed to fetch articles:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentPage, selectedCategory, selectedTag]);
+
+  const fetchCategories = async () => {
+    try {
+      const res = await getCategoryList();
+      setCategories(res);
+    } catch (error) {
+      console.error('Failed to fetch categories:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleCategoryChange = (id: string) => {
+    setSelectedCategory(id);
+    setSelectedTag('all'); // Reset tag when category changes
+    setCurrentPage(1);
+  };
+
+  const handleTagChange = (id: string) => {
+    setSelectedTag(id);
+    setCurrentPage(1);
+  };
+
+  const currentCategoryObj = categories.find((c) => c.id === selectedCategory);
+
   return (
     <div className={styles.container}>
-      <div className="max-w-7xl px-6 py-32">
-        <SectionReveal>
-          <h1 className={styles.pageTitle}>All Articles</h1>
-          <p className={styles.pageSubtitle}>Thoughts, experiments, and observations.</p>
-        </SectionReveal>
+      {/* Fixed/Sticky Filter Section */}
+      <div className={styles.filterWrapper}>
+        <div className={styles.maxContainer}>
+          <div className={styles.filterSection}>
+            {/* Categories */}
+            <div className={styles.filterRow}>
+              <span className={styles.filterLabel}>分类</span>
+              <div className={styles.filterOptions}>
+                <button
+                  className={`${styles.filterItem} ${selectedCategory === 'all' ? styles.active : ''}`}
+                  onClick={() => handleCategoryChange('all')}
+                >
+                  All
+                </button>
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    className={`${styles.filterItem} ${selectedCategory === cat.id ? styles.active : ''}`}
+                    onClick={() => handleCategoryChange(cat.id)}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-        <div className={styles.list}>
-          {ARTICLES.map((article, i) => (
-            <SectionReveal key={article.id} delay={i * 0.1}>
-              <ArtisticCard className={styles.card}>
-                <div className={styles.meta}>
-                  <span>{article.category}</span>
-                  <span className={styles.dot}>•</span>
-                  <span>{article.date}</span>
+            {/* Tags (Conditional) */}
+            {currentCategoryObj && currentCategoryObj.tags.length > 0 && (
+              <div className={styles.filterRow}>
+                <span className={styles.filterLabel}>标签</span>
+                <div className={styles.filterOptions}>
+                  <button
+                    className={`${styles.filterItem} ${selectedTag === 'all' ? styles.active : ''}`}
+                    onClick={() => handleTagChange('all')}
+                  >
+                    All
+                  </button>
+                  {currentCategoryObj.tags.map((tag) => (
+                    <button
+                      key={tag.id}
+                      className={`${styles.filterItem} ${selectedTag === tag.id ? styles.active : ''}`}
+                      onClick={() => handleTagChange(tag.id)}
+                    >
+                      {tag.name}
+                    </button>
+                  ))}
                 </div>
-                <h2 className={styles.title}>{article.title}</h2>
-              </ArtisticCard>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Scrollable List Section */}
+      <div className={styles.scrollArea}>
+        <div className={styles.maxContainer}>
+          <div className={styles.list}>
+            {loading ? (
+              <div className={styles.loading}>Curating content...</div>
+            ) : articles.length > 0 ? (
+              articles.map((article, i) => (
+                <SectionReveal key={article.id} delay={i * 0.05} amount={0.1}>
+                  <ArtisticCard className={styles.articleCard}>
+                    <div className={styles.articleImage}>
+                      <img
+                        src={getFullImageUrl(article.bannerUrl)}
+                        alt={article.title}
+                      />
+                    </div>
+                    <div className={styles.articleContent}>
+                      <div className={styles.articleMeta}>
+                        <span>{article.category.name}</span>
+                        <span className={styles.dot}>•</span>
+                        <span>{formatTime(article.createdAt)}</span>
+                      </div>
+                      <h2 className={styles.articleTitle}>{article.title}</h2>
+                      <p className={styles.articleDescText}>
+                        {article.summary}
+                      </p>
+                      <div className={styles.tags}>
+                        {article.tags.map((tag) => (
+                          <span key={tag.id}>#{tag.name}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </ArtisticCard>
+                </SectionReveal>
+              ))
+            ) : (
+              <div className={styles.empty}>
+                No articles found in this collection.
+              </div>
+            )}
+          </div>
+
+          {/* Pagination */}
+          {!loading && total > PAGE_SIZE && (
+            <SectionReveal delay={0.2}>
+              <Pagination
+                current={currentPage}
+                total={total}
+                pageSize={PAGE_SIZE}
+                onChange={setCurrentPage}
+              />
             </SectionReveal>
-          ))}
+          )}
         </div>
       </div>
     </div>

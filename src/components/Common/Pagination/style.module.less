@@ -1,0 +1,94 @@
+@import '@/styles/design-tokens.less';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 60px;
+  padding-bottom: 80px;
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pageItem {
+  width: 40px;
+  height: 40px;
+  border-radius: @radius-full;
+  border: 1px solid @color-outline-variant;
+  background: transparent;
+  color: @text-on-surface-variant;
+  font-family: @font-body;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all @duration-fast @ease-artistic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    border-color: @color-primary;
+    color: @text-on-surface;
+    background: rgba(243, 255, 205, 0.05);
+  }
+
+  &.active {
+    background: @color-primary;
+    color: @bg-surface;
+    border-color: @color-primary;
+    box-shadow: @glow-shadow;
+  }
+}
+
+.ellipsis {
+  color: @text-on-surface-variant;
+  font-family: @font-body;
+}
+
+.navBtn {
+  background: transparent;
+  border: 1px solid @color-outline-variant;
+  width: 40px;
+  height: 40px;
+  border-radius: @radius-full;
+  color: @text-on-surface-variant;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all @duration-fast @ease-artistic;
+
+  &:hover:not(:disabled) {
+    border-color: @color-primary;
+    color: @text-on-surface;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  // Next button is wider in the UI mockup
+  &:last-child {
+    width: auto;
+    padding: 0 20px;
+  }
+}
+
+.nextText {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.arrow {
+    font-size: 18px;
+    line-height: 1;
+}
