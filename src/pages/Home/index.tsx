@@ -4,7 +4,7 @@ import Hero from './Views/Hero';
 import ListItem from './Views/ListItem';
 import GridItem from './Views/GridItem';
 import CarouselItem from './Views/Carousel';
-import VisualJournal from './Views/VisualJournal';
+import PhotoItem from './Views/Photo';
 import { getHomeData, type HomeData, type PageModule } from '@/api/home';
 
 const Home: React.FC = () => {
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
         case 'POST_LIST':
           return renderArticleView(module);
         case 'PHOTO_GALLERY':
-          return <VisualJournal key={module.id} />;
+          return <PhotoItem key={module.id} module={module} />;
         default:
           return null;
       }
@@ -43,11 +43,11 @@ const Home: React.FC = () => {
   const renderArticleView = (item: PageModule) => {
     switch (item.styleType) {
       case 'list':
-        return <ListItem module={item} />;
+        return <ListItem key={item.id} module={item} />;
       case 'grid':
-        return <GridItem module={item} />;
+        return <GridItem key={item.id} module={item} />;
       case 'carousel':
-        return <CarouselItem module={item} />;
+        return <CarouselItem key={item.id} module={item} />;
       default:
         return null;
     }
