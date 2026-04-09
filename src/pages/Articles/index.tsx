@@ -128,7 +128,7 @@ const Articles: React.FC = () => {
         <div className={styles.maxContainer}>
           <div className={styles.list}>
             {loading ? (
-              <div className={styles.loading}>Curating content...</div>
+              <div className={styles.loading}>服务器配置低，努力加载中</div>
             ) : articles.length > 0 ? (
               articles.map((article, i) => (
                 <SectionReveal key={article.id} delay={i * 0.05} amount={0.1}>
@@ -159,9 +159,7 @@ const Articles: React.FC = () => {
                 </SectionReveal>
               ))
             ) : (
-              <div className={styles.empty}>
-                No articles found in this collection.
-              </div>
+              <div className={styles.empty}>这个，那个，就是还没写...</div>
             )}
           </div>
 

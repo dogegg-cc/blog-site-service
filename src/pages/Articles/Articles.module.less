@@ -52,10 +52,7 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none; // Firefox
-  &::-webkit-scrollbar { display: none; } // Chrome/Safari
+  width: 100%;
 }
 
 .filterLabel {
@@ -65,12 +62,24 @@
   letter-spacing: 0.1em;
   color: @text-on-surface;
   min-width: 50px;
+  flex-shrink: 0; // Keep label fixed width
 }
 
 .filterOptions {
+  flex: 1;
   display: flex;
   gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-wrap: wrap; // Wrap on desktop
+  overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none; // Firefox
+    &::-webkit-scrollbar { display: none; } // Chrome/Safari
+    padding-right: 2rem;
+    mask-image: linear-gradient(to right, black 90%, transparent 100%); // Subtle edge fade
+  }
 }
 
 .filterItem {
@@ -82,6 +91,8 @@
   cursor: pointer;
   transition: all @duration-fast @ease-artistic;
   background: transparent;
+  white-space: nowrap; // Prevent text from wrapping into multiple lines
+  flex-shrink: 0; // Prevent the item from being squeezed
 
   &:hover {
     border-color: @color-primary;
@@ -92,7 +103,6 @@
     background: @color-primary;
     color: @bg-surface;
     border-color: @color-primary;
-    font-weight: 600;
     box-shadow: @glow-shadow;
   }
 }
