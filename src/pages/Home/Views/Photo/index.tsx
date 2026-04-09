@@ -11,32 +11,51 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
 
   // 生成稳定的随机艺术布局配置
   const photoConfigs = useMemo(() => {
+    // 简单的基于字符串的伪随机数生成器，确保渲染是纯函数
+    const getStableRandom = (seed: string, offset: number) => {
+      let hash = 0;
+      const combinedSeed = seed + offset;
+      for (let i = 0; i < combinedSeed.length; i++) {
+        hash = (hash << 5) - hash + combinedSeed.charCodeAt(i);
+        hash |= 0;
+      }
+      return (Math.abs(hash) % 1000) / 1000;
+    };
+
     const total = imageUrls.length;
     return imageUrls.map((url, index) => {
-      const angle = (index / total) * Math.PI * 2 + (Math.random() * 0.4 - 0.2);
-      const radiusX = 35 + Math.random() * 10;
-      const radiusY = 35 + Math.random() * 10;
+      // 使用基于 url 的稳定随机数计算布局属性，确保结果是确定的（Pure）
+      const seed = url || String(index);
+      
+      const angle = total > 0 
+        ? (index / total) * Math.PI * 2 + (getStableRandom(seed, 1) * 0.4 - 0.2)
+        : 0;
+      
+      const radiusX = 35 + getStableRandom(seed, 2) * 10; 
+      const radiusY = 35 + getStableRandom(seed, 3) * 10;
 
       const leftOffset = 50 + Math.cos(angle) * radiusX;
       const topOffset = 50 + Math.sin(angle) * radiusY;
 
-      const rotate = Math.floor(Math.random() * 24) - 12;
-      const width = 11 + Math.random() * 5;
-
+      const rotate = Math.floor(getStableRandom(seed, 4) * 24) - 12;
+      const width = 11 + getStableRandom(seed, 5) * 5; 
+      const zIndex = Math.floor(getStableRandom(seed, 6) * 10) + 10;
+      const aspect = getStableRandom(seed, 7) > 0.5 ? '4/5' : '3/2';
+      const directions = ['up', 'down', 'left', 'right'] as const;
+      const direction = directions[Math.floor(getStableRandom(seed, 8) * 4)];
+      
       return {
         url: getFullImageUrl(url),
-        rotate, // 将旋转角度单独提取，不要在 style 里和 translate 混合
+        rotate,
         style: {
           top: `${topOffset}%`,
           left: `${leftOffset}%`,
           width: `${width}rem`,
-          zIndex: Math.floor(Math.random() * 10) + 10,
+          zIndex: zIndex,
         } as React.CSSProperties,
         delay: index * 0.1,
-        direction: (['up', 'down', 'left', 'right'] as const)[
-          Math.floor(Math.random() * 4)
-        ],
-        aspect: Math.random() > 0.5 ? '4/5' : '3/2',
+        direction,
+        aspect,
       };
     });
   }, [imageUrls]);
