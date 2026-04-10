@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Copy, Check, Code, Mail } from 'lucide-react';
+import { Code, Mail } from 'lucide-react';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import styles from './Hero.module.less';
 import { type UserInfo } from '@/api/home';
 import TextType from '@/components/bits/TextType/TextType';
 import { SplineScene } from '@/components/Common/SplineScene';
+import EmailTooltip from './components/EmailTooltip';
 const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
   const [showEmail, setShowEmail] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -76,8 +76,8 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
               <TextType
                 text={['所有的 Bug 都是有因果的', info.slogan ?? '']}
                 className={styles.heroDesc}
-                typingSpeed={150}
-                deletingSpeed={200}
+                typingSpeed={100}
+                deletingSpeed={100}
                 loop={false}
               />
             </SectionReveal>
@@ -100,23 +100,13 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
                     <Mail size={24} />
                   </button>
 
-                  <AnimatePresence>
-                    {showEmail && (
-                      <motion.div
-                        className={styles.emailTooltip}
-                        initial={{ opacity: 0, scale: 0.9, y: 10, x: '-50%' }}
-                        animate={{ opacity: 1, scale: 1, y: 0, x: '-50%' }}
-                        exit={{ opacity: 0, scale: 0.9, y: 10, x: '-50%' }}
-                        transition={{ duration: 0.2, ease: 'easeOut' }}
-                        onMouseEnter={handleMouseEnter} // 停留在弹窗上也不消失
-                      >
-                        <span className={styles.emailText}>{info.email}</span>
-                        <button className={styles.copyBtn} onClick={handleCopy}>
-                          {copied ? <Check /> : <Copy />}
-                        </button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  <EmailTooltip
+                    email={info.email}
+                    show={showEmail}
+                    isCopied={copied}
+                    onCopy={handleCopy}
+                    onMouseEnter={handleMouseEnter}
+                  />
                 </div>
               </div>
             </SectionReveal>
