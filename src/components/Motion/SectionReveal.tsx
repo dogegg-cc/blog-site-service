@@ -7,7 +7,7 @@ interface SectionRevealProps {
   direction?: 'up' | 'down' | 'left' | 'right';
   className?: string;
   style?: React.CSSProperties;
-  amount?: number; // threshold for starting animation
+  amount?: number; // 启动动画的阈值 (threshold)
 }
 
 const SectionReveal: React.FC<SectionRevealProps> = ({ 

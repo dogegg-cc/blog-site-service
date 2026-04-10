@@ -19,7 +19,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const renderPages = () => {
     const pages = [];
-    const showThreshold = 2; // Number of pages to show around current
+    const showThreshold = 2; // 分页器当前页码前后显示的页数
 
     for (let i = 1; i <= totalPages; i++) {
       if (

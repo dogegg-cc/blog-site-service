@@ -55,4 +55,3 @@ export const FloatingNav: React.FC = () => {
   );
 };
 
-// Removed default export for stability

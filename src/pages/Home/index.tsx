@@ -55,7 +55,6 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.homeContainer}>
-      {/* Hero Section */}
       {renderHero()}
       {renderModules()}
     </div>

@@ -7,22 +7,22 @@ import './App.less';
 function App() {
   return (
     <main className='app-container'>
-      {/* Background Layer: Keep Waves as a subtle texture */}
+      {/* 背景层：将 LiquidEther 作为精细纹理保留 */}
       <div className='background-overflow'>
         {/* <Waves /> */}
         <LiquidEther />
       </div>
 
-      {/* Navigation & Utilities */}
+      {/* 导航与功能组件 */}
       <FloatingNav />
       <ScrollToTop />
 
-      {/* Main Content Area */}
+      {/* 主内容区域 */}
       <div className='page-content'>
         <AppRouter />
       </div>
 
-      {/* Simple Global Footer (Minimal) */}
+      {/* 全局页脚 (极简式) */}
       <footer className='global-footer'>
         <p>© Jiao Pengyou — The Living Gallery</p>
       </footer>

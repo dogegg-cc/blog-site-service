@@ -18,7 +18,7 @@ const Articles: React.FC = () => {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // Filter States from URL
+  // 从 URL 中获取筛选状态
   const selectedCategory = searchParams.get('category') || 'all';
   const selectedTag = searchParams.get('tag') || 'all';
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
@@ -93,10 +93,10 @@ const Articles: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.maxContainer}>
         <div className={styles.layoutWrapper}>
-          {/* Sidebar: Tree Filter */}
+          {/* 侧边栏：树形筛选器 */}
           <aside className={styles.sidebar}>
             <div className={styles.treeNav}>
-              {/* All Articles */}
+              {/* 全部文章 */}
               <div 
                 className={`${styles.treeItem} ${selectedCategory === 'all' ? styles.active : ''}`}
                 onClick={() => handleCategoryChange('all')}
@@ -105,7 +105,7 @@ const Articles: React.FC = () => {
                 <span>全部文章</span>
               </div>
 
-              {/* Category Groups */}
+              {/* 分类分组 */}
               {categories.map((cat) => {
                 const isExpanded = selectedCategory === cat.id;
                 return (
@@ -119,7 +119,7 @@ const Articles: React.FC = () => {
                       <span>{cat.name}</span>
                     </div>
 
-                    {/* Sub Tags */}
+                    {/* 子标签列表 */}
                     {isExpanded && cat.tags.length > 0 && (
                       <div className={styles.treeSubList}>
                         <div 
@@ -146,7 +146,7 @@ const Articles: React.FC = () => {
             </div>
           </aside>
 
-          {/* Main List Area */}
+          {/* 主列表区域 */}
           <div className={styles.listArea}>
             <div className={styles.list}>
               {loading ? (
@@ -188,7 +188,7 @@ const Articles: React.FC = () => {
               )}
             </div>
 
-            {/* Pagination */}
+            {/* 分页组件 */}
             {!loading && total > PAGE_SIZE && (
               <SectionReveal delay={0.2}>
                 <div style={{ marginTop: '4rem' }}>

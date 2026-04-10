@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import './LiquidEther.css';
 
-// --- Types & Interfaces ---
+// --- 类型与接口 ---
 
 export interface LiquidEtherProps {
   mouseForce?: number;
@@ -39,7 +39,7 @@ interface SimOptions {
   BFECC: boolean;
 }
 
-// --- Shader Strings ---
+// --- Shader 字符串 ---
 
 const face_vert = `
 attribute vec3 position;
@@ -221,7 +221,7 @@ void main(){
 }
 `;
 
-// --- Logic Classes ---
+// --- 逻辑类 ---
 
 class CommonClass {
   width = 0;
@@ -1148,7 +1148,7 @@ class WebGLManager {
   }
 }
 
-// --- Component ---
+// --- 组件 ---
 
 const defaultColors = ['#5227FF', '#FF9FFC', '#B19EEF'];
 
@@ -1224,6 +1224,7 @@ export default function LiquidEther({
       webgl.dispose();
       webglRef.current = null;
     };
+    // 忽略依赖项校验，仅在挂载时运行一次初始 WebGL 实例化
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
