@@ -1,0 +1,76 @@
+@import '@/styles/design-tokens.less';
+@import '../../Views/Common/Shared.module.less';
+
+.gridCard {
+  background-color: @bg-surface-container-high !important;
+  padding: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  transition: all @duration-default;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.02);
+    .gridImage img { transform: scale(1.1); }
+  }
+}
+
+.gridImage {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform @duration-slow @ease-artistic;
+  }
+}
+
+.gridInfo {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.gridCategory {
+  color: @color-primary;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+.gridTitle {
+  font-size: 1.5rem;
+  font-family: @font-headline;
+  margin: 0.5rem 0;
+  .one-text-line();
+  color: @text-on-surface;
+}
+
+.gridDesc {
+  color: @text-on-surface-variant;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  .text-lines(3);
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  
+  span {
+    font-size: 0.75rem;
+    color: @text-on-surface-variant;
+    opacity: 0.7;
+  }
+}

@@ -9,7 +9,16 @@
   }
 }
 
-.gridHeader { text-align: center; }
+.container {
+  max-width: 1280px; // 7xl
+  margin: 0 auto;
+  padding: 0 1.5rem; // px-6
+}
+
+.gridHeader { 
+  text-align: center;
+  margin-bottom: 4rem;
+}
 
 .gridContent {
   display: grid;
@@ -18,69 +27,4 @@
 
   @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
   @media (max-width: 640px) { grid-template-columns: 1fr; }
-}
-
-.gridCard {
-  background-color: @bg-surface-container-high !important;
-  padding: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  overflow: hidden;
-  transition: all @duration-default;
-
-  &:hover {
-    transform: scale(1.02);
-    .gridImage img { transform: scale(1.1); }
-  }
-}
-
-.gridImage {
-  width: 100%;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform @duration-slow @ease-artistic;
-  }
-}
-
-.gridInfo {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.gridCategory {
-  color: @color-primary;
-  text-transform: uppercase;
-  font-weight: 800;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-}
-
-.gridTitle {
-  font-size: 1.5rem;
-  font-family: @font-headline;
-  margin: 0.5rem 0;
-  .one-text-line()
-}
-
-.gridDesc {
-  color: @text-on-surface-variant;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  .text-lines(3);
-}
-
-.tags {
-  display: flex;
-  gap: 0.5rem;
-  
-  span {
-    font-size: 0.75rem;
-    color: @text-on-surface-variant;
-  }
 }
