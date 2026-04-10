@@ -84,7 +84,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
             <SectionReveal direction='right' delay={0.25}>
               <div className={styles.heroSocial}>
                 <a href={info.github} target='_blank' rel='noopener noreferrer'>
-                  <Code size={24} />
+                  <Code size={20} />
                 </a>
 
                 <div
@@ -97,7 +97,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
                     className={styles.trigger}
                     onClick={() => setShowEmail(!showEmail)}
                   >
-                    <Mail size={24} />
+                    <Mail size={20} />
                   </button>
 
                   <EmailTooltip

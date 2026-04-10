@@ -20,14 +20,14 @@ function App() {
 
       {/* 主内容区域 */}
       <div className='page-content'>
-        <Suspense fallback={<div className="loading-placeholder" />}>
+        <Suspense fallback={<div className='loading-placeholder' />}>
           <AppRouter />
         </Suspense>
       </div>
 
       {/* 全局页脚 (极简式) */}
       <footer className='global-footer'>
-        <p>© Jiao Pengyou — The Living Gallery</p>
+        <p>© 2026 黑ICP备17005802号-2</p>
       </footer>
     </main>
   );
