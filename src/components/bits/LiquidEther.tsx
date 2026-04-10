@@ -230,9 +230,9 @@ class CommonClass {
   pixelRatio = 1;
   time = 0;
   delta = 0;
+  lastTime = 0; // 用于替代 Clock 计算增量
   container: HTMLElement | null = null;
   renderer: THREE.WebGLRenderer | null = null;
-  clock: THREE.Clock | null = null;
 
   init(container: HTMLElement) {
     this.container = container;
@@ -247,8 +247,9 @@ class CommonClass {
     el.style.width = '100%';
     el.style.height = '100%';
     el.style.display = 'block';
-    this.clock = new THREE.Clock();
-    this.clock.start();
+    
+    // 使用高精度时间戳进行初始化
+    this.lastTime = performance.now();
   }
 
   resize() {
@@ -261,9 +262,11 @@ class CommonClass {
   }
 
   update() {
-    if (!this.clock) return;
-    this.delta = this.clock.getDelta();
+    const now = performance.now();
+    // 计算帧间增量 (秒)
+    this.delta = Math.min((now - this.lastTime) / 1000, 0.1); // 限制最大增量防止掉帧跳跃
     this.time += this.delta;
+    this.lastTime = now;
   }
 
   dispose() {
@@ -271,7 +274,6 @@ class CommonClass {
       this.renderer.dispose();
       this.renderer.forceContextLoss();
     }
-    this.clock = null;
   }
 }
 
