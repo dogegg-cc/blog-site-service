@@ -120,7 +120,7 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
                   className={styles.photoWrapper}
                   style={{ aspectRatio: config.aspect }}
                 >
-                  <img src={config.url} alt={`Snap ${i}`} />
+                  <img src={config.url} alt={`Snap ${i}`} loading="lazy" />
                 </div>
               </SectionReveal>
             </div>
@@ -143,7 +143,7 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
                   className={styles.photoWrapper}
                   style={{ aspectRatio: config.aspect }}
                 >
-                  <img src={config.url} alt={`Snap L-${i}`} />
+                  <img src={config.url} alt={`Snap L-${i}`} loading="lazy" />
                 </div>
               </SectionReveal>
             ))}
@@ -162,7 +162,7 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
                   className={styles.photoWrapper}
                   style={{ aspectRatio: config.aspect }}
                 >
-                  <img src={config.url} alt={`Snap R-${i}`} />
+                  <img src={config.url} alt={`Snap R-${i}`} loading="lazy" />
                 </div>
               </SectionReveal>
             ))}

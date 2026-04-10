@@ -1218,8 +1218,20 @@ export default function LiquidEther({
     );
     io.observe(container);
 
+    const handleVisibilityChange = () => {
+      if (document.hidden) webgl.pause();
+      else if (io) {
+        // 仅在当前处于视口内时才恢复播放
+        const rect = container.getBoundingClientRect();
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (isInViewport) webgl.start();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     return () => {
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       io.disconnect();
       webgl.dispose();
       webglRef.current = null;

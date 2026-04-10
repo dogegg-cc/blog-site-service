@@ -139,6 +139,7 @@ const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
                           <img
                             src={getFullImageUrl(article.bannerUrl)}
                             alt={article.title}
+                            loading="lazy"
                           />
                         </div>
                         <div className='flex justify-between items-center mb-2'>

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { AppRouter } from '@/router/AppRouter';
 import { FloatingNav } from './components/Navigation/FloatingNav';
 import ScrollToTop from './components/Common/ScrollToTop';
@@ -19,7 +20,9 @@ function App() {
 
       {/* 主内容区域 */}
       <div className='page-content'>
-        <AppRouter />
+        <Suspense fallback={<div className="loading-placeholder" />}>
+          <AppRouter />
+        </Suspense>
       </div>
 
       {/* 全局页脚 (极简式) */}
