@@ -12,7 +12,7 @@ export interface ApiResponse<T = unknown> {
 }
 
 const service: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

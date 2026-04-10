@@ -1,7 +1,7 @@
 /**
  * 图片预览基础路径 (建议根据环境变量配置，当前硬编码对应后端地址)
  */
-export const IMAGE_BASE_URL = 'http://localhost:3001';
+export const IMAGE_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 /**
  * 补全图片 URL
