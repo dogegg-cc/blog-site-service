@@ -67,12 +67,12 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
       <div className='max-w-7xl mx-auto px-6 w-full'>
         <div className={styles.heroGrid}>
           <div className='flex flex-col gap-6'>
-            <SectionReveal direction='right'>
+            <SectionReveal direction='right' delay={0.25}>
               <h1 className={styles.heroTitle}>
                 你好，我是<span>{info.name}</span>
               </h1>
             </SectionReveal>
-            <SectionReveal direction='right' delay={0.2}>
+            <SectionReveal direction='right' delay={0.25}>
               <TextType
                 text={['所有的 Bug 都是有因果的', info.slogan ?? '']}
                 className={styles.heroDesc}
@@ -81,7 +81,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
                 loop={false}
               />
             </SectionReveal>
-            <SectionReveal direction='right' delay={0.4}>
+            <SectionReveal direction='right' delay={0.25}>
               <div className={styles.heroSocial}>
                 <a href={info.github} target='_blank' rel='noopener noreferrer'>
                   <Code size={24} />
