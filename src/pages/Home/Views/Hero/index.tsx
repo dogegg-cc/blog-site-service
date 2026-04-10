@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, Code, Mail } from 'lucide-react';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import styles from './Hero.module.less';
 import { type UserInfo } from '@/api/home';
@@ -84,7 +84,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
             <SectionReveal direction='right' delay={0.4}>
               <div className={styles.heroSocial}>
                 <a href={info.github} target='_blank' rel='noopener noreferrer'>
-                  <span className='material-symbols-outlined'>code</span>
+                  <Code size={24} />
                 </a>
 
                 <div
@@ -97,7 +97,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
                     className={styles.trigger}
                     onClick={() => setShowEmail(!showEmail)}
                   >
-                    <span className='material-symbols-outlined'>mail</span>
+                    <Mail size={24} />
                   </button>
 
                   <AnimatePresence>

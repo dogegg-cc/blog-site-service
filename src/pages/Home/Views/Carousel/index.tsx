@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import ArtisticCard from '@/components/Common/ArtisticCard';
@@ -93,18 +94,14 @@ const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
                     disabled={currentIndex === 0}
                     aria-label='Previous'
                   >
-                    <span className='material-symbols-outlined'>
-                      chevron_left
-                    </span>
+                    <ChevronLeft size={24} />
                   </button>
                   <button
                     onClick={handleNext}
                     disabled={currentIndex === articles.length - 1}
                     aria-label='Next'
                   >
-                    <span className='material-symbols-outlined'>
-                      chevron_right
-                    </span>
+                    <ChevronRight size={24} />
                   </button>
                 </div>
               </SectionReveal>
