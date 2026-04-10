@@ -1,0 +1,41 @@
+@import '@/styles/design-tokens.less';
+
+.splineContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  // 关键：防止手机端 canvas 溢出导致页面拉宽
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background: @glass-bg;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+    outline: none;
+    background: transparent !important;
+    // 关键：防止 inner canvas 意外溢出
+    max-width: 100%;
+  }
+}
+
+.canvasWrapper {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+
+  &.loaded {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

@@ -49,6 +49,7 @@
   max-width: 32rem;
   margin-bottom: 2rem;
   white-space: pre-wrap;
+  min-height: 85px;
   @media (max-width: 1024px) {
     margin-left: auto;
     margin-right: auto;
@@ -151,49 +152,10 @@
   }
 }
 
-@keyframes morph {
-  0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: rotate(0deg) scale(1); }
-  33% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; transform: rotate(120deg) scale(1.1); }
-  66% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; transform: rotate(240deg) scale(0.9); }
-}
-
-.sculptureWrapper {
+.computer {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 500px;
-  @media (max-width: 640px) {
-    height: 400px;
-  }
-}
-
-.liquidSculpture {
-  width: 400px;
-  height: 400px;
-  background: linear-gradient(135deg, fade(@color-primary-container, 40%) 0%, fade(@color-primary, 10%) 100%);
-  backdrop-filter: blur(40px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  animation: morph 12s linear infinite;
-  box-shadow: inset 0 0 50px fade(@color-primary-container, 20%), 0 0 100px fade(@color-primary-container, 10%);
-  position: relative;
-  z-index: 2;
-
-  @media (max-width: 640px) {
-    width: 300px;
-    height: 300px;
-  }
-}
-
-.glowOrb {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  filter: blur(120px);
-  z-index: 1;
-
-  @media (max-width: 640px) {
-    width: 400px;
-    height: 400px;
-  }
+  height: 100%;
 }

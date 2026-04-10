@@ -5,6 +5,7 @@ import SectionReveal from '@/components/Motion/SectionReveal';
 import styles from './Hero.module.less';
 import { type UserInfo } from '@/api/home';
 import TextType from '@/components/bits/TextType/TextType';
+import { SplineScene } from '@/components/Common/SplineScene';
 const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
   const [showEmail, setShowEmail] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -120,10 +121,8 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
               </div>
             </SectionReveal>
           </div>
-
-          <div className={styles.sculptureWrapper}>
-            <div className={styles.glowOrb} />
-            <div className={styles.liquidSculpture} />
+          <div className={styles.computer}>
+            <SplineScene scene='/scene.splinecode' zoom={0.35} />
           </div>
         </div>
       </div>
