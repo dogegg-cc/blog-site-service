@@ -10,7 +10,9 @@ const NAV_ITEMS = [
 
 export const FloatingNav: React.FC = () => {
   const location = useLocation();
-  const isArticleDetail = location.pathname.startsWith('/articles/') && location.pathname !== '/articles';
+  const isArticleDetail =
+    location.pathname.startsWith('/articles/') &&
+    location.pathname !== '/articles';
 
   if (isArticleDetail) return null;
 
@@ -39,13 +41,6 @@ export const FloatingNav: React.FC = () => {
                 className={`${styles.navItem} ${location.pathname === item.path ? styles.active : ''}`}
               >
                 {item.label}
-                {location.pathname === item.path && (
-                  <motion.span
-                    layoutId='navUnderline'
-                    className={styles.underline}
-                    transition={{ duration: 0.5 }}
-                  />
-                )}
               </Link>
             ))}
           </div>
@@ -54,4 +49,3 @@ export const FloatingNav: React.FC = () => {
     </motion.nav>
   );
 };
-

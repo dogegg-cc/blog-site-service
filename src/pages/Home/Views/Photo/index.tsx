@@ -100,7 +100,7 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
         <div className={styles.desktopScatter}>
           {photoConfigs.map((config, i) => (
             <div
-              key={i}
+              key={config.url}
               className={styles.photoAnchor}
               style={{ top: config.style.top, left: config.style.left }}
             >
@@ -133,9 +133,9 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
           <div className={styles.masonryColumn}>
             {photoConfigs
               .filter((_, i) => i % 2 === 0)
-              .map((config, i) => (
+              .map((config) => (
                 <SectionReveal
-                  key={`left-${i}`}
+                  key={config.url}
                   className={styles.photoPrint}
                   delay={config.delay * 0.5}
                   direction='up'
@@ -145,7 +145,7 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
                     className={styles.photoWrapper}
                     style={{ aspectRatio: config.aspect }}
                   >
-                    <img src={config.url} alt={`Snap L-${i}`} loading='lazy' />
+                    <img src={config.url} loading='lazy' />
                   </div>
                 </SectionReveal>
               ))}
@@ -154,7 +154,7 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
           <div className={styles.masonryColumn}>
             {photoConfigs
               .filter((_, i) => i % 2 !== 0)
-              .map((config, i) => (
+              .map((config) => (
                 <SectionReveal
                   key={config.url}
                   className={styles.photoPrint}
@@ -166,7 +166,7 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
                     className={styles.photoWrapper}
                     style={{ aspectRatio: config.aspect }}
                   >
-                    <img src={config.url} alt={`Snap R-${i}`} loading='lazy' />
+                    <img src={config.url} loading='lazy' />
                   </div>
                 </SectionReveal>
               ))}
