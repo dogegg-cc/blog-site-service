@@ -12,7 +12,8 @@ import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
 import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash';
 import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
 import markdown from 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
-
+import swift from 'react-syntax-highlighter/dist/esm/languages/prism/swift';
+import objectivec from 'react-syntax-highlighter/dist/esm/languages/prism/objectivec';
 // 注册常用语言以优化包体积 (Async chunks can be used but this is more stable for now)
 SyntaxHighlighter.registerLanguage('tsx', tsx);
 SyntaxHighlighter.registerLanguage('typescript', typescript);
@@ -22,6 +23,9 @@ SyntaxHighlighter.registerLanguage('css', css);
 SyntaxHighlighter.registerLanguage('bash', bash);
 SyntaxHighlighter.registerLanguage('json', json);
 SyntaxHighlighter.registerLanguage('markdown', markdown);
+SyntaxHighlighter.registerLanguage('swift', swift);
+SyntaxHighlighter.registerLanguage('objectivec', objectivec);
+
 import { getTextFromChildren, generateId } from '../hooks/useScrollSync';
 import styles from '../ArticleDetail.module.less';
 
@@ -61,9 +65,11 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ content }) => {
                 const match = /language-(\w+)/.exec(className || '');
                 return !inline && match ? (
                   <SyntaxHighlighter
-                    style={vscDarkPlus as { [key: string]: React.CSSProperties }}
+                    style={
+                      vscDarkPlus as { [key: string]: React.CSSProperties }
+                    }
                     language={match[1]}
-                    PreTag="div"
+                    PreTag='div'
                     {...props}
                   >
                     {String(children).replace(/\n$/, '')}
