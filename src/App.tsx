@@ -1,17 +1,31 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { AppRouter } from '@/router/AppRouter';
 import { FloatingNav } from './components/Navigation/FloatingNav';
 import ScrollToTop from './components/Common/ScrollToTop';
-import LiquidEther from '@/components/bits/LiquidEther';
 import './App.less';
 
 function App() {
+  const lightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const moveLight = (e: MouseEvent) => {
+      if (lightRef.current) {
+        const { clientX, clientY } = e;
+        // 使用 translate3d 触发 GPU 加速，并将中心点偏移
+        lightRef.current.style.transform = `translate3d(${clientX}px, ${clientY}px, 0)`;
+      }
+    };
+
+    window.addEventListener('mousemove', moveLight);
+    return () => window.removeEventListener('mousemove', moveLight);
+  }, []);
+
   return (
     <main className='app-container'>
-      {/* 背景层：将 LiquidEther 作为精细纹理保留 */}
-      <div className='background-overflow'>
-        {/* <Waves /> */}
-        <LiquidEther />
+      {/* 背景层：动态光源 + 磨砂玻璃 */}
+      <div className='background-fixed'>
+        <div ref={lightRef} className='mouse-follow-light' />
+        <div className='glass-overlay' />
       </div>
 
       {/* 导航与功能组件 */}
