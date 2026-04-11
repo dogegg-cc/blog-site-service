@@ -53,14 +53,15 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ content }) => {
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw]}
             components={{
-              h2: ({ children }: HeadingProps) => {
-                const id = generateId(getTextFromChildren(children));
-                return <h2 id={id}>{children}</h2>;
-              },
-              h3: ({ children }: HeadingProps) => {
-                const id = generateId(getTextFromChildren(children));
-                return <h3 id={id}>{children}</h3>;
-              },
+              ...Object.fromEntries(
+                (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const).map((Tag) => [
+                  Tag,
+                  ({ children }: HeadingProps) => {
+                    const id = generateId(getTextFromChildren(children));
+                    return <Tag id={id}>{children}</Tag>;
+                  },
+                ])
+              ),
               code: ({ inline, className, children, ...props }: CodeProps) => {
                 const match = /language-(\w+)/.exec(className || '');
                 return !inline && match ? (

@@ -228,22 +228,27 @@
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.9);
 
-    h2 {
-      font-family: @font-headline;
-      font-size: 32px;
-      margin: 64px 0 32px;
-      color: #fff;
-    }
-
-    h3 {
-      font-family: @font-headline;
-      font-size: 24px;
-      margin: 48px 0 24px;
-      color: #fff;
-    }
+    // 1-6 级标题样式的建议字号
+    h1 { font-size: 40px; margin: 80px 0 40px; color: #fff; font-family: @font-headline; }
+    h2 { font-size: 32px; margin: 64px 0 32px; color: #fff; font-family: @font-headline; border-bottom: 1px solid @color-outline-variant; padding-bottom: 8px; }
+    h3 { font-size: 24px; margin: 48px 0 24px; color: #fff; font-family: @font-headline; }
+    h4 { font-size: 20px; margin: 32px 0 16px; color: #fff; font-family: @font-headline; }
+    h5 { font-size: 18px; margin: 24px 0 12px; color: #fff; font-family: @font-headline; text-transform: uppercase; letter-spacing: 0.1em; }
+    h6 { font-size: 16px; margin: 24px 0 12px; color: @text-on-surface-variant; font-family: @font-headline; }
 
     p {
       margin-bottom: 24px;
+    }
+
+    // 强调与装饰
+    strong { color: #fff; font-weight: 600; }
+    em { color: @color-secondary; }
+    del { color: @text-on-surface-variant; text-decoration: line-through; opacity: 0.6; }
+    hr {
+      margin: 48px 0;
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, @color-outline-variant 50%, transparent);
     }
 
     // 首字下沉 (只对第一个 p 有效)
@@ -261,25 +266,154 @@
 
     blockquote {
       margin: 48px 0;
-      padding: 0 0 0 32px;
-      border-left: 2px solid fade(@color-primary, 40%);
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 2px solid @color-primary;
+      border-radius: 0 @radius-default @radius-default 0;
       font-family: @font-headline;
       font-style: italic;
-      font-size: 24px;
-      color: #fff;
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.8);
+      
+      p:last-child { margin-bottom: 0; }
     }
 
+    // 列表支持
+    ul { list-style-type: disc; }
+    ol { list-style-type: decimal; }
     ul, ol {
-      margin: 32px 0;
-      padding-left: 24px;
+      margin: 24px 0;
+      padding-left: 32px;
+      list-style-position: outside;
+      
+      li {
+        display: list-item;
+        margin-bottom: 8px;
+        
+        &::marker {
+          color: @color-primary;
+        }
+
+        // 嵌套列表缩进
+        ul, ol {
+          margin: 8px 0;
+        }
+      }
+    }
+
+    // 任务列表
+    .task-list-item {
+      list-style-type: none !important;
+      padding-left: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+
+      input[type="checkbox"] {
+        margin-top: 6px;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid @color-outline;
+        border-radius: 4px;
+        position: relative;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: all @duration-fast;
+
+        &:checked {
+          background: @color-primary;
+          border-color: @color-primary;
+
+          &::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: @bg-surface;
+            font-size: 12px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    // 表格支持
+    table {
+      width: 100%;
+      margin: 48px 0;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: @radius-default;
+      overflow: hidden;
+      border: 1px solid @color-outline-variant;
+      font-size: 16px;
+
+      th, td {
+        padding: 16px 24px;
+        text-align: left;
+        border: 1px solid @color-outline-variant;
+      }
+
+      th {
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        font-weight: 600;
+        font-family: @font-headline;
+      }
+
+      tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.01);
+      }
+
+      tr:hover {
+        background: rgba(255, 255, 255, 0.03);
+      }
+    }
+
+    // 脚注
+    .footnotes {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid @color-outline-variant;
+      font-size: 14px;
+      color: @text-on-surface-variant;
+
+      hr { display: none; }
+      
+      ol {
+        padding-left: 20px;
+      }
+
       li {
         margin-bottom: 12px;
+      }
+
+      .data-footnote-backref {
+        margin-left: 8px;
+        color: @color-primary;
+        text-decoration: none;
+        opacity: 0.6;
+        &:hover { opacity: 1; }
+      }
+    }
+
+    sup {
+      font-size: 12px;
+      line-height: 0;
+      margin-left: 2px;
+      a {
+        color: @color-primary;
+        text-decoration: none;
+        &:hover { text-decoration: underline; }
       }
     }
 
     code {
       padding: 2px 6px;
       font-size: 0.9em;
+      color: @color-tertiary;
     }
 
     pre {
