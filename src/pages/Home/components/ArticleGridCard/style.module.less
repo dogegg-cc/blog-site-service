@@ -2,11 +2,11 @@
 @import '../../Views/Common/Shared.module.less';
 
 .gridCard {
-  background-color: @bg-surface-container-high !important;
+  background-color: @bg-surface-container-low !important;
   padding: 0 !important;
   border: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden;
-  transition: all @duration-default;
+  transition: all @duration-slow @ease-artistic;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -15,6 +15,7 @@
   &:hover {
     transform: scale(1.02);
     .gridImage img { transform: scale(1.1); }
+    background-color: @bg-surface-container-high !important;
   }
 }
 
