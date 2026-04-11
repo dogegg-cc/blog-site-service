@@ -120,7 +120,7 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
                   className={styles.photoWrapper}
                   style={{ aspectRatio: config.aspect }}
                 >
-                  <img src={config.url} alt={`Snap ${i}`} loading="lazy" />
+                  <img src={config.url} alt={`Snap ${i}`} loading='lazy' />
                 </div>
               </SectionReveal>
             </div>
@@ -131,41 +131,45 @@ const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
         <div className={styles.mobileMasonry}>
           {/* 左列 */}
           <div className={styles.masonryColumn}>
-            {photoConfigs.filter((_, i) => i % 2 === 0).map((config, i) => (
-              <SectionReveal
-                key={`left-${i}`}
-                className={styles.photoPrint}
-                delay={config.delay * 0.5}
-                direction="up"
-                style={{ width: '100%', transform: 'none' }} // 移动端取消倾斜
-              >
-                <div
-                  className={styles.photoWrapper}
-                  style={{ aspectRatio: config.aspect }}
+            {photoConfigs
+              .filter((_, i) => i % 2 === 0)
+              .map((config, i) => (
+                <SectionReveal
+                  key={`left-${i}`}
+                  className={styles.photoPrint}
+                  delay={config.delay * 0.5}
+                  direction='up'
+                  style={{ width: '100%', transform: 'none' }} // 移动端取消倾斜
                 >
-                  <img src={config.url} alt={`Snap L-${i}`} loading="lazy" />
-                </div>
-              </SectionReveal>
-            ))}
+                  <div
+                    className={styles.photoWrapper}
+                    style={{ aspectRatio: config.aspect }}
+                  >
+                    <img src={config.url} alt={`Snap L-${i}`} loading='lazy' />
+                  </div>
+                </SectionReveal>
+              ))}
           </div>
           {/* 右列 */}
           <div className={styles.masonryColumn}>
-            {photoConfigs.filter((_, i) => i % 2 !== 0).map((config, i) => (
-              <SectionReveal
-                key={`right-${i}`}
-                className={styles.photoPrint}
-                delay={config.delay * 0.5}
-                direction="up"
-                style={{ width: '100%', transform: 'none' }}
-              >
-                <div
-                  className={styles.photoWrapper}
-                  style={{ aspectRatio: config.aspect }}
+            {photoConfigs
+              .filter((_, i) => i % 2 !== 0)
+              .map((config, i) => (
+                <SectionReveal
+                  key={config.url}
+                  className={styles.photoPrint}
+                  delay={config.delay * 0.5}
+                  direction='up'
+                  style={{ width: '100%', transform: 'none' }}
                 >
-                  <img src={config.url} alt={`Snap R-${i}`} loading="lazy" />
-                </div>
-              </SectionReveal>
-            ))}
+                  <div
+                    className={styles.photoWrapper}
+                    style={{ aspectRatio: config.aspect }}
+                  >
+                    <img src={config.url} alt={`Snap R-${i}`} loading='lazy' />
+                  </div>
+                </SectionReveal>
+              ))}
           </div>
         </div>
       </div>
