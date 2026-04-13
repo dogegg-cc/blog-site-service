@@ -1,15 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Code, Mail } from 'lucide-react';
 import SectionReveal from '@/components/Motion/SectionReveal';
 import styles from './Hero.module.less';
 import { type UserInfo } from '@/api/home';
 import TextType from '@/components/bits/TextType/TextType';
-// 动态导入 3D 场景组件以减少首屏 JS 体积
-const SplineScene = lazy(() =>
-  import('@/components/Common/SplineScene').then((mod) => ({
-    default: mod.SplineScene,
-  })),
-);
+import { SplineScene } from '@/components/Common/SplineScene';
 import EmailTooltip from './components/EmailTooltip';
 const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
   const [showEmail, setShowEmail] = useState(false);
@@ -117,16 +112,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
             </SectionReveal>
           </div>
           <div className={styles.computer}>
-            <Suspense
-              fallback={
-                <div
-                  className="w-full h-full bg-white/5 animate-pulse rounded-2xl"
-                  style={{ minHeight: '400px' }}
-                />
-              }
-            >
-              <SplineScene scene="/scene.splinecode" zoom={0.35} />
-            </Suspense>
+            <SplineScene scene='/scene.splinecode' zoom={0.35} />
           </div>
         </div>
       </div>
