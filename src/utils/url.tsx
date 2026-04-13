@@ -9,7 +9,7 @@ export const IMAGE_BASE_URL = import.meta.env.VITE_API_BASE_URL;
  * 判断当前是否为手机浏览器
  */
 export const isMobileBrowser = (): boolean => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  return /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent,
   );
 };

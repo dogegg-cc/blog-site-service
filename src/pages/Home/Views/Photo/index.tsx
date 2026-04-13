@@ -1,177 +1,186 @@
-import React, { useMemo } from 'react';
-import SectionReveal from '@/components/Motion/SectionReveal';
+import React, { useState, useMemo, useEffect } from 'react';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import type { PageModule, PhotoItemDto } from '@/api/home';
+import { getPhotoUrl, isMobileBrowser } from '@/utils/url';
 import styles from './PhotoItem.module.less';
-import type { PageModule } from '@/api/home';
-import { getFullImageUrl } from '@/utils/url';
 import GlitchText from '@/components/bits/GlitchText/GlitchText';
-const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
-  const { title, content } = module;
-  const { imageUrls = [] } = content;
 
-  // 生成稳定的随机艺术布局配置
-  const photoConfigs = useMemo(() => {
-    // 简单的基于字符串的伪随机数生成器，确保渲染是纯函数
-    const getStableRandom = (seed: string, offset: number) => {
-      let hash = 0;
-      const combinedSeed = seed + offset;
-      for (let i = 0; i < combinedSeed.length; i++) {
-        hash = (hash << 5) - hash + combinedSeed.charCodeAt(i);
-        hash |= 0;
-      }
-      return (Math.abs(hash) % 1000) / 1000;
+/**
+ * 复古电视机轮播组件 (移动端)
+ */
+const RetroTVCarousel: React.FC<{ photos: PhotoItemDto[] }> = ({ photos }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextChannel = React.useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % photos.length);
+  }, [photos.length]);
+
+  const prevChannel = React.useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
+  }, [photos.length]);
+
+  // 自动播放逻辑：使用延迟重置策略，确保 5s 观赏期不被打断
+  useEffect(() => {
+    // 定义延时任务名
+    const autoNext = () => {
+      nextChannel();
     };
 
-    const total = imageUrls.length;
-    return imageUrls.map((url, index) => {
-      // 使用基于 url 的稳定随机数计算布局属性，确保结果是确定的（Pure）
-      const seed = url || String(index);
+    // 启动延时
+    const timer = setTimeout(autoNext, 5000);
 
-      const angle =
-        total > 0
-          ? (index / total) * Math.PI * 2 +
-            (getStableRandom(seed, 1) * 0.4 - 0.2)
-          : 0;
+    // 严密清理：无论是组件销毁还是手动切换(引发索引变化)，都必须清除之前的延时
+    return () => clearTimeout(timer);
+  }, [currentIndex, nextChannel]);
 
-      const radiusX = 35 + getStableRandom(seed, 2) * 10;
-      const radiusY = 40 + getStableRandom(seed, 3) * 10;
+  // 复古电视机切换方案：改为慢慢淡入淡出
+  const tvFadeVariants: Variants = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 0.8, // 慢慢显示
+        ease: 'easeInOut',
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 0.6, // 慢慢隐藏
+        ease: 'easeInOut',
+      },
+    },
+  };
 
-      // 计算原始偏移
-      let leftOffset = 50 + Math.cos(angle) * radiusX;
-      let topOffset = 50 + Math.sin(angle) * radiusY;
+  return (
+    <div className={styles.mobileTVSection}>
+      <div className={styles.tvContainer}>
+        <div className={styles.antennaWrapper}>
+          <div className={styles.antenna} />
+          <div className={styles.antenna} />
+        </div>
+        <div className={styles.tvBody}>
+          <div className={styles.tvScreenFrame}>
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key={currentIndex}
+                className={styles.tvContent}
+                variants={tvFadeVariants}
+                initial='initial'
+                animate='animate'
+                exit='exit'
+              >
+                <img src={getPhotoUrl(photos[currentIndex])} alt='TV Show' />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className={styles.tvKnobs}>
+            <div className={styles.knob} onClick={nextChannel} />
+            <div className={styles.knob} onClick={prevChannel} />
+            <div className={styles.speaker}>
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+          </div>
+        </div>
+        <div className={styles.tvLegs}>
+          <span />
+          <span />
+        </div>
+      </div>
+    </div>
+  );
+};
 
-      // 边界约束：确保照片中心点不会太靠近边缘，从而防止照片边缘溢出
-      // 考虑到照片高度，top 限制在 15% - 85% 之间
-      topOffset = Math.max(15, Math.min(85, topOffset));
-      // left 限制在 12% - 88% 之间
-      leftOffset = Math.max(12, Math.min(88, leftOffset));
+/**
+ * 滚动行组件
+ */
+const MarqueeRow: React.FC<{
+  items: PhotoItemDto[];
+  direction: 'left' | 'right';
+  speed: number;
+}> = ({ items, direction, speed }) => {
+  if (items.length === 0) return null;
 
-      const rotate = Math.floor(getStableRandom(seed, 4) * 24) - 12;
-      const width = 11 + getStableRandom(seed, 5) * 5;
-      const zIndex = Math.floor(getStableRandom(seed, 6) * 10) + 10;
-      const aspect = getStableRandom(seed, 7) > 0.5 ? '4/5' : '3/2';
-      const directions = ['up', 'down', 'left', 'right'] as const;
-      const direction = directions[Math.floor(getStableRandom(seed, 8) * 4)];
+  // 使用两组数据来实现无缝连接
+  const doubleItems = [...items, ...items];
 
-      return {
-        url: getFullImageUrl(url),
-        rotate,
-        style: {
-          top: `${topOffset}%`,
-          left: `${leftOffset}%`,
-          width: `${width}rem`,
-          zIndex: zIndex,
-        } as React.CSSProperties,
-        delay: index * 0.1,
-        direction,
-        aspect,
-      };
+  return (
+    <div className={styles.marqueeRow}>
+      <div
+        className={`${styles.marqueeContent} ${direction === 'left' ? styles.scrollLeft : styles.scrollRight}`}
+        style={{ animationDuration: `${speed}s` }}
+      >
+        {doubleItems.map((photo, index) => (
+          <div key={`${photo.id}-${index}`} className={styles.photoWrapper}>
+            <img
+              src={getPhotoUrl(photo)}
+              alt={photo.id}
+              style={{ aspectRatio: photo.ratio }}
+              loading='lazy'
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/**
+ * 照片墙视图组件
+ */
+const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
+  const { content, title } = module;
+  const { photoItems = [] } = content;
+  const isMobile = isMobileBrowser();
+
+  // 分配照片到三行
+  const rows = useMemo(() => {
+    if (isMobile || photoItems.length === 0) return [[], [], []];
+
+    const r1: PhotoItemDto[] = [];
+    const r2: PhotoItemDto[] = [];
+    const r3: PhotoItemDto[] = [];
+
+    photoItems.forEach((item, index) => {
+      if (index % 3 === 0) r1.push(item);
+      else if (index % 3 === 1) r2.push(item);
+      else r3.push(item);
     });
-  }, [imageUrls]);
+
+    return [r1, r2, r3];
+  }, [photoItems, isMobile]);
 
   return (
     <section className={styles.visualJournal}>
-      <div className={styles.journalHeader}>
-        <GlitchText
-          speed={3}
-          enableShadows
-          enableOnHover={false}
-          className={styles.journalTitle}
-        >
-          {title}
-        </GlitchText>
-      </div>
-
-      <div className={styles.photoWallContainer}>
-        {/* 背景大字增加艺术氛围：包裹一层静态定位容器以规避动画 Transform 覆盖 */}
-        <div className={styles.titleAnchor}>
-          <SectionReveal delay={0.1} className={styles.albumTitle}>
-            <GlitchText
-              speed={3}
-              enableShadows
-              enableOnHover={false}
-              className={styles.albumTitle}
-            >
-              {title}
-            </GlitchText>
-          </SectionReveal>
+      <div className={styles.maxContainer}>
+        <div className={styles.headerTitle}>
+          <GlitchText
+            speed={3}
+            enableShadows
+            enableOnHover={false}
+            className={styles.albumTitle}
+          >
+            {title}
+          </GlitchText>
         </div>
-
-        {/* 1. 桌面端展示模式：绝对定位 + 艺术散落 */}
-        <div className={styles.desktopScatter}>
-          {photoConfigs.map((config, i) => (
-            <div
-              key={config.url}
-              className={styles.photoAnchor}
-              style={{ top: config.style.top, left: config.style.left }}
-            >
-              <SectionReveal
-                className={styles.photoPrint}
-                delay={config.delay}
-                direction={config.direction}
-                style={
-                  {
-                    transform: `rotate(${config.rotate}deg)`,
-                    width: config.style.width,
-                    zIndex: config.style.zIndex,
-                  } as React.CSSProperties
-                }
-              >
-                <div
-                  className={styles.photoWrapper}
-                  style={{ aspectRatio: config.aspect }}
-                >
-                  <img src={config.url} alt={`Snap ${i}`} loading='lazy' />
-                </div>
-              </SectionReveal>
-            </div>
-          ))}
-        </div>
-
-        {/* 2. 移动端展示模式：两列 Masonry 瀑布流（头部交错不对齐） */}
-        <div className={styles.mobileMasonry}>
-          {/* 左列 */}
-          <div className={styles.masonryColumn}>
-            {photoConfigs
-              .filter((_, i) => i % 2 === 0)
-              .map((config) => (
-                <SectionReveal
-                  key={config.url}
-                  className={styles.photoPrint}
-                  delay={config.delay * 0.5}
-                  direction='up'
-                  style={{ width: '100%', transform: 'none' }} // 移动端取消倾斜
-                >
-                  <div
-                    className={styles.photoWrapper}
-                    style={{ aspectRatio: config.aspect }}
-                  >
-                    <img src={config.url} loading='lazy' />
-                  </div>
-                </SectionReveal>
-              ))}
+        {/* 桌面端：滚动照片墙 */}
+        {!isMobile && photoItems.length > 0 && (
+          <div className={styles.desktopMarquee}>
+            <MarqueeRow items={rows[0]} direction='left' speed={50} />
+            <MarqueeRow items={rows[1]} direction='right' speed={70} />
+            <MarqueeRow items={rows[2]} direction='left' speed={60} />
           </div>
-          {/* 右列 */}
-          <div className={styles.masonryColumn}>
-            {photoConfigs
-              .filter((_, i) => i % 2 !== 0)
-              .map((config) => (
-                <SectionReveal
-                  key={config.url}
-                  className={styles.photoPrint}
-                  delay={config.delay * 0.5}
-                  direction='up'
-                  style={{ width: '100%', transform: 'none' }}
-                >
-                  <div
-                    className={styles.photoWrapper}
-                    style={{ aspectRatio: config.aspect }}
-                  >
-                    <img src={config.url} loading='lazy' />
-                  </div>
-                </SectionReveal>
-              ))}
-          </div>
-        </div>
+        )}
+
+        {/* 移动端：复古电视机轮播 */}
+        {isMobile && photoItems.length > 0 && (
+          <RetroTVCarousel photos={photoItems} />
+        )}
       </div>
     </section>
   );

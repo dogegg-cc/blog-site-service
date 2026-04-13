@@ -3,151 +3,232 @@
 .visualJournal {
   position: relative;
   width: 100%;
-  background-color: @bg-surface-container-lowest;
   padding: 8rem 0;
   overflow: hidden;
-  @media (max-width: 640px) {
-    padding: 4rem 0;
+
+  @media (max-width: 768px) {
+    padding: 3rem 0;
   }
 }
 
-.journalHeader {
-  margin-bottom: 2rem;
+.maxContainer {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.headerTitle {
+  display: flex;
   justify-content: center;
-  display: none;
-  @media (max-width: 640px) {
-    display: flex;
-  }
+  align-items: center;
 }
 
-.journalTitle {
-  font-family: @font-headline;
+.albumTitle {
+  margin-bottom: 4rem;
   font-size: clamp(4rem, 15vw, 10rem); 
   font-weight: 150;
   font-style: italic;
-  color: @color-primary;
-  mix-blend-mode: overlay;
-  white-space: nowrap; 
 }
 
-.photoWallContainer {
-  position: relative;
-  min-height: 800px;
+/* 桌面端：滚动照片墙 (Scrolling Photo Wall) */
+.desktopMarquee {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  
+  padding: 2rem 0;
+
   @media (max-width: 768px) {
-    min-height: auto;
+    display: none;
+  }
+}
+
+.marqueeRow {
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  
+  // 不同的行可以设置不同的高度感，或者统一高度
+  height: 250px; 
+}
+
+.marqueeContent {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  will-change: transform;
+}
+
+.scrollLeft {
+  animation: scrollLeft 60s linear infinite;
+}
+
+.scrollRight {
+  animation: scrollRight 60s linear infinite;
+}
+
+.photoWrapper {
+  height: 100%;
+  flex-shrink: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: scale(1.04) translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+
+  img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.3s ease;
+  }
+}
+
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* 移动端：复古电视机 (Retro TV) - 保持不变 */
+.mobileTVSection {
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 2rem 1rem;
   }
 }
 
-.desktopScatter {
-  display: block;
-  @media (max-width: 768px) {
-    display: none;
+.tvContainer {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+}
+
+.antennaWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: -10px;
+  .antenna {
+    width: 4px;
+    height: 60px;
+    background: #888;
+    border-radius: 2px;
+    position: relative;
+    &:nth-child(1) { transform: rotate(-30deg); transform-origin: bottom; }
+    &:nth-child(2) { transform: rotate(30deg); transform-origin: bottom; }
+    &::after {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: -2px;
+      width: 8px;
+      height: 8px;
+      background: #666;
+      border-radius: 50%;
+    }
   }
 }
 
-.mobileMasonry {
-  display: none;
-  @media (max-width: 768px) {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.25rem;
-  }
+.tvBody {
+  background: #5d4037;
+  border-radius: 25px;
+  padding: 15px 55px 15px 15px;
+  box-shadow: inset 0 -10px 0 rgba(0,0,0,0.2), 0 15px 30px rgba(0,0,0,0.3);
+  position: relative;
+  border: 4px solid #3e2723;
 }
 
-.masonryColumn {
-  flex: 1;
+.tvKnobs {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-// 静态定位锚点：解决 translate(-50%, -50%) 被动画覆盖的问题
-.titleAnchor {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 50; // 默认在普通照片 (10-20) 之上
-  pointer-events: none;
-
-  @media (max-width: 768px) {
-    display: none;
+  gap: 20px;
+  .knob {
+    width: 26px;
+    height: 26px;
+    background: #333;
+    border-radius: 50%;
+    border: 3px solid #666;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+    cursor: pointer;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 10px;
+      background: white;
+      left: 50%;
+      top: 2px;
+      transform: translateX(-50%);
+    }
+  }
+  .speaker {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    span { width: 26px; height: 2px; background: rgba(0,0,0,0.3); }
   }
 }
 
-.albumTitle {
-  font-family: @font-headline;
-  font-size: clamp(4rem, 15vw, 10rem); 
-  font-weight: 150;
-  font-style: italic;
-  color: @color-primary;
-  mix-blend-mode: overlay;
-  white-space: nowrap; 
-}
-
-.albumTitleInner {
-  transform: rotateY(45deg) rotateZ(-3deg); // 在不带动画的内层应用 3D 旋转
-  transform-style: preserve-3d;
-  display: inline-block;
-}
-
-.photoAnchor {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  transition: z-index 0s; // 悬停立即生效
-  
-  &:hover {
-    z-index: 100; // 获取焦点时盖过文字 (50) 和其他照片
-  }
-  
-  @media (max-width: 768px) {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
-    z-index: 1 !important;
-  }
-}
-
-.photoPrint {
-  background: rgba(255, 255, 255, 0.82);
-  padding: 5px;
-  box-shadow: 
-    0 4px 6px rgba(0, 0, 0, 0.3),
-    0 10px 25px rgba(0, 0, 0, 0.15);
-  transition: all @duration-default @ease-artistic;
-  border-radius: 2px;
+.tvScreenFrame {
+  background: #111;
+  background-image: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 80%), url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-size: cover;
+  border-radius: 12px;
+  border: 10px solid #222;
   overflow: hidden;
-  
-  &:hover {
-    transform: scale(1.05) rotate(0deg) !important;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-  }
-
-  @media (max-width: 768px) {
-    width: 100% !important;
-    max-width: none;
-    margin: 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transform: none !important; // 移动端取消倾斜
-    padding: 3px;
+  aspect-ratio: 4/3;
+  position: relative;
+  box-shadow: inset 0 10px 30px rgba(0,0,0,0.8);
+  animation: tvStatic 0.1s steps(2) infinite;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+    background-size: 100% 4px;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.4;
   }
 }
 
-.photoWrapper {
+@keyframes tvStatic {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
+}
+
+.tvContent {
   width: 100%;
-  overflow: hidden;
-  background: #efefef;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  height: 100%;
+  background: black;
+  img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; opacity: 0.95; }
+}
+
+.tvLegs {
+  display: flex;
+  justify-content: center;
+  gap: 130px;
+  margin-top: -5px;
+  span { width: 15px; height: 15px; background: #3e2723; transform: perspective(10px) rotateX(10deg); }
 }
