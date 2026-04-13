@@ -1,5 +1,4 @@
 import React from 'react';
-import Spline from '@splinetool/react-spline';
 import styles from './style.module.less';
 
 interface SplineSceneProps {
@@ -11,7 +10,7 @@ interface SplineSceneProps {
 
 /**
  * 封装的 Spline 3D 场景组件
- * 修复了 Application 接口冲突并恢复了组件结构。
+ * 使用 CDN 引入的 Web Component (spline-viewer) 以减小打包体积
  */
 export const SplineScene: React.FC<SplineSceneProps> = ({
   scene,
@@ -19,7 +18,8 @@ export const SplineScene: React.FC<SplineSceneProps> = ({
 }) => {
   return (
     <div className={`${styles.splineContainer} ${className}`}>
-      <Spline scene={scene} />
+      {/* @ts-expect-error - spline-viewer 是通过 CDN 引入的 Web Component */}
+      <spline-viewer url={scene} />
     </div>
   );
 };

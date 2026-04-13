@@ -14,12 +14,12 @@
   background: @bg-surface-container-low;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
-  canvas {
+  canvas,
+  spline-viewer {
     width: 100% !important;
     height: 100% !important;
     outline: none;
     background: transparent !important;
-    // 关键：防止 inner canvas 意外溢出
     max-width: 100%;
   }
 }
