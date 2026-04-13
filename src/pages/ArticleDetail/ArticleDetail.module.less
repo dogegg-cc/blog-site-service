@@ -335,23 +335,34 @@
     }
 
     // 表格支持
-    table {
-      display: block;
+    .tableWrapper {
       width: 100%;
       margin: 48px 0;
-      border-collapse: collapse;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: @radius-default;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      border-radius: @radius-default;
       border: 1px solid @color-outline-variant;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    table {
+      display: table;
+      width: 100%;
+      border-collapse: collapse;
       font-size: 16px;
 
       th, td {
         padding: 16px 24px;
         text-align: left;
         border: 1px solid @color-outline-variant;
-        min-width: 120px; // 确保在横滚时表格内容不会被挤压得太难看
+        min-width: 120px; 
+
+        // 当只有两列时，平分宽度
+        &:first-child:nth-last-child(2),
+        &:first-child:nth-last-child(2) ~ th,
+        &:first-child:nth-last-child(2) ~ td {
+          width: 50%;
+        }
       }
 
       th {
@@ -476,7 +487,7 @@
       font-size: 56px;
     }
 
-    table {
+    .tableWrapper {
       margin: 24px 0;
     }
 

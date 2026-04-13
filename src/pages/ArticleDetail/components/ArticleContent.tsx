@@ -62,6 +62,11 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ content }) => {
                   },
                 ])
               ),
+              table: ({ children }) => (
+                <div className={styles.tableWrapper}>
+                  <table>{children}</table>
+                </div>
+              ),
               code: ({ inline, className, children, ...props }: CodeProps) => {
                 const match = /language-(\w+)/.exec(className || '');
                 return !inline && match ? (
