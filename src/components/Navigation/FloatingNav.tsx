@@ -32,19 +32,17 @@ export const FloatingNav: React.FC = () => {
         height={60}
         backgroundOpacity={0.5}
       >
-        <motion.div>
-          <div className={styles.pillsList}>
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`${styles.navItem} ${location.pathname === item.path ? styles.active : ''}`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </motion.div>
+        <div className={styles.pillsList}>
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`${styles.navItem} ${location.pathname === item.path ? styles.active : ''}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </GlassSurface>
     </motion.nav>
   );
