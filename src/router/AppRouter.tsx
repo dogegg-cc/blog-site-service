@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 const Home = lazy(() => import('@/pages/Home/index'));
 const Articles = lazy(() => import('@/pages/Articles/index'));
@@ -11,6 +11,8 @@ export const AppRouter = () => {
       <Route path="/" element={<Home />} />
       <Route path="/articles" element={<Articles />} />
       <Route path="/articles/:id" element={<ArticleDetail />} />
+      {/* 404 重定向到首页 */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };
