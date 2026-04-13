@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getArticleDetail, type ArticleDetail as ArticleDetailData } from '@/api/article';
+import {
+  getArticleDetail,
+  type ArticleDetail as ArticleDetailData,
+} from '@/api/article';
 import { useScrollSync } from './hooks/useScrollSync';
 import ArticleHero from './components/ArticleHero';
 import ArticleTOC from './components/ArticleTOC';
 import ArticleContent from './components/ArticleContent';
 import styles from './ArticleDetail.module.less';
+import { contentToFullPath } from '@/utils/url';
 
 const ArticleDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -32,11 +36,13 @@ const ArticleDetail: React.FC = () => {
   // 2. 交互逻辑 Hooks (目录同步)
   const { toc, activeId, scrollToAnchor } = useScrollSync({
     article,
-    loading
+    loading,
   });
 
-  if (loading) return <div className={styles.loading}>Tracing the narrative...</div>;
-  if (!article) return <div className={styles.loading}>Artifact not found.</div>;
+  if (loading)
+    return <div className={styles.loading}>Tracing the narrative...</div>;
+  if (!article)
+    return <div className={styles.loading}>Artifact not found.</div>;
 
   return (
     <div className={styles.detailContainer}>
@@ -46,14 +52,14 @@ const ArticleDetail: React.FC = () => {
       {/* 文章主布局 */}
       <div className={styles.layoutGrid}>
         {/* 目录侧边栏组件 */}
-        <ArticleTOC 
-          toc={toc} 
-          activeId={activeId} 
-          onAnchorClick={scrollToAnchor} 
+        <ArticleTOC
+          toc={toc}
+          activeId={activeId}
+          onAnchorClick={scrollToAnchor}
         />
 
         {/* 正文渲染组件 */}
-        <ArticleContent content={article.content} />
+        <ArticleContent content={contentToFullPath(article.content ?? '')} />
       </div>
     </div>
   );
