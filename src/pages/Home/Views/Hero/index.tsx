@@ -112,7 +112,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
             </SectionReveal>
           </div>
           <div className={styles.computer}>
-            <SplineScene scene='/scene.splinecode' />
+            <SplineScene scene='https://api.dogegg.cc/static/scene.splinecode' />
           </div>
         </div>
       </div>
