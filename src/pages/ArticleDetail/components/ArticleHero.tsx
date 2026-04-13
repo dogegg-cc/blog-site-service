@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ArticleDetail as ArticleDetailData } from '@/api/article';
-import { getFullImageUrl } from '@/utils/url';
+import { getPhotoUrl } from '@/utils/url';
 import styles from '../ArticleDetail.module.less';
 
 interface ArticleHeroProps {
@@ -12,7 +12,7 @@ const ArticleHero: React.FC<ArticleHeroProps> = ({ article }) => {
     <header className={styles.heroSection}>
       <div className={styles.heroBg}>
         <img
-          src={getFullImageUrl(article.bannerItem?.originalUrl)}
+          src={getPhotoUrl(article.bannerItem, 'high')}
           alt={article.title}
         />
         <div className={styles.overlay} />

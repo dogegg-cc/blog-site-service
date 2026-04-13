@@ -1,6 +1,6 @@
 import React from 'react';
 import ArtisticCard from '@/components/Common/ArtisticCard';
-import { getFullImageUrl } from '@/utils/url';
+import { getPhotoUrl } from '@/utils/url';
 import type { Article } from '@/api/home';
 import styles from './style.module.less';
 
@@ -22,7 +22,7 @@ export const ArticleGridCard: React.FC<ArticleGridCardProps> = ({
     <ArtisticCard className={styles.gridCard} onClick={onClick}>
       <div className={styles.gridImage}>
         <img
-          src={getFullImageUrl(article.bannerItem?.metadata?.mediumUrl)}
+          src={getPhotoUrl(article.bannerItem)}
           alt={article.title}
           loading='lazy'
         />

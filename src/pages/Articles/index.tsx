@@ -5,7 +5,7 @@ import ArtisticCard from '@/components/Common/ArtisticCard';
 import Pagination from '@/components/Common/Pagination';
 import { getCategoryList, getArticleList, type Category } from '@/api/article';
 import type { Article } from '@/api/home';
-import { getFullImageUrl } from '@/utils/url';
+import { getPhotoUrl } from '@/utils/url';
 import { formatTime } from '@/utils/time';
 import { ChevronRight, Hash, LayoutGrid, FolderOpen } from 'lucide-react';
 import styles from './Articles.module.less';
@@ -164,9 +164,7 @@ const Articles: React.FC = () => {
                     >
                       <div className={styles.articleImage}>
                         <img
-                          src={getFullImageUrl(
-                            article.bannerItem?.metadata?.mediumUrl,
-                          )}
+                          src={getPhotoUrl(article.bannerItem)}
                           alt={article.title}
                         />
                       </div>

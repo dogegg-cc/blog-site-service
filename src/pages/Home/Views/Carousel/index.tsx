@@ -6,7 +6,7 @@ import ArtisticCard from '@/components/Common/ArtisticCard';
 import { useNavigate } from 'react-router-dom';
 import styles from './Carousel.module.less';
 import type { Article, PageModule } from '@/api/home';
-import { getFullImageUrl } from '@/utils/url';
+import { getPhotoUrl } from '@/utils/url';
 
 const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
   ({ module }) => {
@@ -137,9 +137,7 @@ const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
                       >
                         <div className={styles.seriesImage}>
                           <img
-                            src={getFullImageUrl(
-                              article.bannerItem?.metadata?.mediumUrl,
-                            )}
+                            src={getPhotoUrl(article.bannerItem)}
                             alt={article.title}
                             loading='lazy'
                           />

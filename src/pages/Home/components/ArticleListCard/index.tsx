@@ -1,6 +1,6 @@
 import React from 'react';
 import ArtisticCard from '@/components/Common/ArtisticCard';
-import { getFullImageUrl } from '@/utils/url';
+import { getPhotoUrl } from '@/utils/url';
 import { formatTime } from '@/utils/time';
 import type { Article } from '@/api/home';
 import styles from './style.module.less';
@@ -23,7 +23,7 @@ export const ArticleListCard: React.FC<ArticleListCardProps> = ({
     <ArtisticCard className={styles.articleCard} onClick={onClick}>
       <div className={styles.articleImage}>
         <img
-          src={getFullImageUrl(article.bannerItem?.metadata?.mediumUrl)}
+          src={getPhotoUrl(article.bannerItem)}
           alt={article.title}
           loading='lazy'
         />
