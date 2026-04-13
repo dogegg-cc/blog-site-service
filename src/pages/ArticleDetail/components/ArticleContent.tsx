@@ -71,6 +71,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ content }) => {
                     }
                     language={match[1]}
                     PreTag='div'
+                    className={styles.codeBlock}
                     {...props}
                   >
                     {String(children).replace(/\n$/, '')}

@@ -227,6 +227,14 @@
     width: 100%;
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.9);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+
+    // 防御性设计：确保直接子元素不会溢出
+    & > * {
+      max-width: 100%;
+    }
 
     // 1-6 级标题样式的建议字号
     h1 { font-size: 40px; margin: 80px 0 40px; color: #fff; font-family: @font-headline; }
@@ -328,12 +336,14 @@
 
     // 表格支持
     table {
+      display: block;
       width: 100%;
       margin: 48px 0;
       border-collapse: collapse;
       background: rgba(255, 255, 255, 0.02);
       border-radius: @radius-default;
-      overflow: hidden;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       border: 1px solid @color-outline-variant;
       font-size: 16px;
 
@@ -341,6 +351,7 @@
         padding: 16px 24px;
         text-align: left;
         border: 1px solid @color-outline-variant;
+        min-width: 120px; // 确保在横滚时表格内容不会被挤压得太难看
       }
 
       th {
@@ -348,6 +359,7 @@
         color: #fff;
         font-weight: 600;
         font-family: @font-headline;
+        white-space: nowrap; // 标题不换行以保持对齐
       }
 
       tr:nth-child(even) {
@@ -401,16 +413,30 @@
       padding: 2px 6px;
       font-size: 0.9em;
       color: @color-tertiary;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
-    pre {
+    pre, .codeBlock {
       background: transparent !important;
       padding: 0 !important;
       margin: 32px 0 !important;
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+
+      // 内部代码层级
+      & > div {
+        background: transparent !important;
+        padding: 1.5rem !important;
+        border-radius: @radius-default !important;
+        border: 1px solid @color-outline-variant !important;
+      }
     }
 
     img {
       max-width: 100%;
+      height: auto; // 确保不拉伸
       border-radius: @radius-default;
       margin: 48px 0;
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
@@ -448,6 +474,14 @@
     
     & > p:first-of-type::first-letter {
       font-size: 56px;
+    }
+
+    table {
+      margin: 24px 0;
+    }
+
+    pre {
+      margin: 24px 0 !important;
     }
   }
 }
