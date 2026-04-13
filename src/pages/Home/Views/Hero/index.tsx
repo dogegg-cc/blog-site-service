@@ -112,7 +112,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
             </SectionReveal>
           </div>
           <div className={styles.computer}>
-            <SplineScene scene='/scene.splinecode' zoom={0.35} />
+            <SplineScene scene='/scene.splinecode' />
           </div>
         </div>
       </div>
