@@ -7,7 +7,7 @@ export interface UserInfo {
   email?: string;
   github?: string;
   slogan?: string;
-  avatar?: string;
+  avatarItem?: PhotoItemDto;
 }
 
 export interface Category {
@@ -20,11 +20,37 @@ export interface Tag {
   name: string;
 }
 
+export interface PhotoMetadataDto {
+  // 图片中等路径
+  mediumUrl: string;
+  // 图片缩略图路径
+  thumbnailUrl: string;
+}
+
+export interface PhotoItemDto {
+  // 图片id
+  id: string;
+  // 图片原始路径
+  originalUrl: string;
+  // 图片元数据
+  metadata?: PhotoMetadataDto | null;
+  // 图片高度
+  height: number;
+  // 图片宽度
+  width: number;
+  // 图片比例
+  ratio: number;
+  // 图片类型
+  mimetype: string;
+  // 创建时间
+  createdAt: string;
+}
+
 export interface Article {
   id: string;
   title: string;
   summary: string;
-  bannerUrl: string;
+  bannerItem?: PhotoItemDto;
   category: Category;
   tags: Tag[];
   createdAt: string;
@@ -32,8 +58,9 @@ export interface Article {
 
 export interface ModuleContent {
   articleIds?: string[];
-  imageUrls?: string[];
+  photoIds?: string[];
   articles?: Article[];
+  photoItems?: PhotoItemDto[];
 }
 
 export type ModuleType = 'POST_LIST' | 'PHOTO_GALLERY';

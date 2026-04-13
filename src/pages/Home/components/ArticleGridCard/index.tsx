@@ -14,14 +14,18 @@ interface ArticleGridCardProps {
  * Responsible for rendering an individual article card in a grid layout.
  * Adheres to SRP by focusing only on the presentation of a single article.
  */
-export const ArticleGridCard: React.FC<ArticleGridCardProps> = ({ article, onClick }) => {
+export const ArticleGridCard: React.FC<ArticleGridCardProps> = ({
+  article,
+  onClick,
+}) => {
   return (
-    <ArtisticCard 
-      className={styles.gridCard}
-      onClick={onClick}
-    >
+    <ArtisticCard className={styles.gridCard} onClick={onClick}>
       <div className={styles.gridImage}>
-        <img src={getFullImageUrl(article.bannerUrl)} alt={article.title} loading="lazy" />
+        <img
+          src={getFullImageUrl(article.bannerItem?.metadata?.mediumUrl)}
+          alt={article.title}
+          loading='lazy'
+        />
       </div>
       <div className={styles.gridInfo}>
         <span className={styles.gridCategory}>{article.category.name}</span>

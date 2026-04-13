@@ -11,7 +11,10 @@ const ArticleHero: React.FC<ArticleHeroProps> = ({ article }) => {
   return (
     <header className={styles.heroSection}>
       <div className={styles.heroBg}>
-        <img src={getFullImageUrl(article.bannerUrl)} alt={article.title} />
+        <img
+          src={getFullImageUrl(article.bannerItem?.originalUrl)}
+          alt={article.title}
+        />
         <div className={styles.overlay} />
       </div>
       <div className={styles.heroContent}>

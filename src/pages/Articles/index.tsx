@@ -97,7 +97,7 @@ const Articles: React.FC = () => {
           <aside className={styles.sidebar}>
             <div className={styles.treeNav}>
               {/* 全部文章 */}
-              <div 
+              <div
                 className={`${styles.treeItem} ${selectedCategory === 'all' ? styles.active : ''}`}
                 onClick={() => handleCategoryChange('all')}
               >
@@ -110,26 +110,30 @@ const Articles: React.FC = () => {
                 const isExpanded = selectedCategory === cat.id;
                 return (
                   <div key={cat.id} className={styles.treeGroup}>
-                    <div 
+                    <div
                       className={`${styles.treeItem} ${isExpanded ? styles.active : ''} ${cat.tags.length > 0 ? styles.hasChildren : ''} ${isExpanded ? styles.expanded : ''}`}
                       onClick={() => handleCategoryChange(cat.id)}
                     >
                       <ChevronRight className={styles.treeIcon} size={16} />
-                      <FolderOpen className={styles.folderIcon} size={18} style={{ marginRight: '4px', opacity: 0.7 }} />
+                      <FolderOpen
+                        className={styles.folderIcon}
+                        size={18}
+                        style={{ marginRight: '4px', opacity: 0.7 }}
+                      />
                       <span>{cat.name}</span>
                     </div>
 
                     {/* 子标签列表 */}
                     {isExpanded && cat.tags.length > 0 && (
                       <div className={styles.treeSubList}>
-                        <div 
-                           className={`${styles.treeSubItem} ${selectedTag === 'all' ? styles.active : ''}`}
-                           onClick={() => handleTagChange(cat.id, 'all')}
+                        <div
+                          className={`${styles.treeSubItem} ${selectedTag === 'all' ? styles.active : ''}`}
+                          onClick={() => handleTagChange(cat.id, 'all')}
                         >
                           全部标签
                         </div>
-                        {cat.tags.map(tag => (
-                          <div 
+                        {cat.tags.map((tag) => (
+                          <div
                             key={tag.id}
                             className={`${styles.treeSubItem} ${selectedTag === tag.id ? styles.active : ''}`}
                             onClick={() => handleTagChange(cat.id, tag.id)}
@@ -154,13 +158,15 @@ const Articles: React.FC = () => {
               ) : articles.length > 0 ? (
                 articles.map((article, i) => (
                   <SectionReveal key={article.id} delay={i * 0.05} amount={0.1}>
-                    <ArtisticCard 
+                    <ArtisticCard
                       className={styles.articleCard}
                       onClick={() => navigate(`/articles/${article.id}`)}
                     >
                       <div className={styles.articleImage}>
                         <img
-                          src={getFullImageUrl(article.bannerUrl)}
+                          src={getFullImageUrl(
+                            article.bannerItem?.metadata?.mediumUrl,
+                          )}
                           alt={article.title}
                         />
                       </div>

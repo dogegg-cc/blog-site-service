@@ -15,14 +15,18 @@ interface ArticleListCardProps {
  * Responsible for rendering an individual article card in a linear list layout.
  * Adheres to SRP by focused on the representation of a single article in list view.
  */
-export const ArticleListCard: React.FC<ArticleListCardProps> = ({ article, onClick }) => {
+export const ArticleListCard: React.FC<ArticleListCardProps> = ({
+  article,
+  onClick,
+}) => {
   return (
-    <ArtisticCard 
-      className={styles.articleCard}
-      onClick={onClick}
-    >
+    <ArtisticCard className={styles.articleCard} onClick={onClick}>
       <div className={styles.articleImage}>
-        <img src={getFullImageUrl(article.bannerUrl)} alt={article.title} loading="lazy" />
+        <img
+          src={getFullImageUrl(article.bannerItem?.metadata?.mediumUrl)}
+          alt={article.title}
+          loading='lazy'
+        />
       </div>
       <div className={styles.articleContent}>
         <div className={styles.articleMeta}>

@@ -131,15 +131,17 @@ const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
                         damping: 30,
                       }}
                     >
-                      <ArtisticCard 
+                      <ArtisticCard
                         className={styles.card}
                         onClick={() => navigate(`/articles/${article.id}`)}
                       >
                         <div className={styles.seriesImage}>
                           <img
-                            src={getFullImageUrl(article.bannerUrl)}
+                            src={getFullImageUrl(
+                              article.bannerItem?.metadata?.mediumUrl,
+                            )}
                             alt={article.title}
-                            loading="lazy"
+                            loading='lazy'
                           />
                         </div>
                         <div className='flex justify-between items-center mb-2'>
