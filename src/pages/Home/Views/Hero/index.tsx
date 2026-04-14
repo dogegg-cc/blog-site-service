@@ -6,6 +6,7 @@ import { type UserInfo } from '@/api/home';
 import TextType from '@/components/bits/TextType/TextType';
 import EmailTooltip from './components/EmailTooltip';
 import HeroAnimation from './components/HeroAnimation';
+import { SoftAurora } from '@/components/bits/SoftAurora/SoftAurora';
 const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
   const [showEmail, setShowEmail] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -64,6 +65,32 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
 
   return (
     <section className={styles.hero}>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          zIndex: -1,
+          opacity: 0.5,
+        }}
+      >
+        <SoftAurora
+          speed={0.6}
+          scale={1.5}
+          brightness={1}
+          color1='#f7f7f7'
+          color2='#e100ff'
+          noiseFrequency={2.5}
+          noiseAmplitude={1}
+          bandHeight={0.5}
+          bandSpread={1}
+          octaveDecay={0.1}
+          layerOffset={0}
+          colorSpeed={1}
+          enableMouseInteraction
+          mouseInfluence={0.25}
+        />
+      </div>
       <div className={styles.container}>
         <div className={styles.heroGrid}>
           <div>
