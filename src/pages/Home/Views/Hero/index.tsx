@@ -5,6 +5,7 @@ import styles from './Hero.module.less';
 import { type UserInfo } from '@/api/home';
 import TextType from '@/components/bits/TextType/TextType';
 import EmailTooltip from './components/EmailTooltip';
+import HeroAnimation from './components/HeroAnimation';
 const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
   const [showEmail, setShowEmail] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -63,9 +64,9 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
 
   return (
     <section className={styles.hero}>
-      <div className='max-w-7xl mx-auto px-6 w-full'>
+      <div className={styles.container}>
         <div className={styles.heroGrid}>
-          <div className='flex flex-col gap-6'>
+          <div>
             <SectionReveal direction='right' delay={0.25}>
               <h1 className={styles.heroTitle}>
                 你好，我是<span>{info.name}</span>
@@ -110,7 +111,11 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
               </div>
             </SectionReveal>
           </div>
-          <div className={styles.computer}></div>
+          <div className={styles.computer}>
+            <SectionReveal direction='left' delay={0.4}>
+              <HeroAnimation />
+            </SectionReveal>
+          </div>
         </div>
       </div>
     </section>
