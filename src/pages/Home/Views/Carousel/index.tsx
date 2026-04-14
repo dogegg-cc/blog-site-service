@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Carousel.module.less';
 import type { Article, PageModule } from '@/api/home';
 import { getPhotoUrl } from '@/utils/url';
+import sharedStyles from '../Common/Shared.module.less';
 
 const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
   ({ module }) => {
@@ -81,10 +82,10 @@ const CarouselItem: React.FC<{ module: PageModule }> = React.memo(
             {/* 左侧/上方: 单元信息面板 */}
             <div className={styles.infoPanel}>
               <SectionReveal direction='right'>
-                <h2 className={styles.unitTitle}>{title}</h2>
+                <h2 className={sharedStyles.sectionTitle}>{title}</h2>
               </SectionReveal>
               <SectionReveal direction='right' delay={0.2}>
-                <p className={styles.unitIntro}>{intro}</p>
+                <p className={sharedStyles.sectionSubtitle}>{intro}</p>
               </SectionReveal>
 
               <SectionReveal direction='right' delay={0.4}>
