@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import type { PageModule, PhotoItemDto } from '@/api/home';
-import { getPhotoUrl, isMobileBrowser } from '@/utils/url';
+import { getPhotoUrl } from '@/utils/url';
 import styles from './PhotoItem.module.less';
 import GlitchText from '@/components/bits/GlitchText/GlitchText';
 
@@ -136,7 +136,19 @@ const MarqueeRow: React.FC<{
 const PhotoItem: React.FC<{ module: PageModule }> = React.memo(({ module }) => {
   const { content, title } = module;
   const { photoItems = [] } = content;
-  const isMobile = isMobileBrowser();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 992);
+    };
+
+    // 初始化检查
+    checkMobile();
+
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // 分配照片到三行
   const rows = useMemo(() => {
