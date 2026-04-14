@@ -4,7 +4,6 @@ import SectionReveal from '@/components/Motion/SectionReveal';
 import styles from './Hero.module.less';
 import { type UserInfo } from '@/api/home';
 import TextType from '@/components/bits/TextType/TextType';
-import { SplineScene } from '@/components/Common/SplineScene';
 import EmailTooltip from './components/EmailTooltip';
 const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
   const [showEmail, setShowEmail] = useState(false);
@@ -111,9 +110,7 @@ const Hero: React.FC<{ info: UserInfo }> = React.memo(({ info }) => {
               </div>
             </SectionReveal>
           </div>
-          <div className={styles.computer}>
-            <SplineScene scene='https://api.dogegg.cc/static/scene.splinecode' />
-          </div>
+          <div className={styles.computer}></div>
         </div>
       </div>
     </section>
