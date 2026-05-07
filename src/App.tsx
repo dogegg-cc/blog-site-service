@@ -41,7 +41,7 @@ function App() {
 
       {/* 全局页脚 (极简式) */}
       <footer className='global-footer'>
-        <p>© 2026 黑ICP备17005802号-2</p>
+        <p>© 2026 黑ICP备17005802号-2 ｜ 辽公网安备21011202001256号</p>
       </footer>
     </main>
   );
